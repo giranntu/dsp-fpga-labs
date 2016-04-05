@@ -82,8 +82,7 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
-
-
+	 alt_irq_enable(leftready_id);
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -169,6 +168,11 @@ alt_16 signed2unsigned(int sign){
 	return result;
 }
 
+// ------------------------------------------------------------
+short gain = 10;
+short loop = 0;
+short sine_table[10]={0,588,951,951,588,0,-588,-951,-951,-588}; 
+// ------------------------------------------------------------
 static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 volatile int* leftreadyptr = (volatile int *)context;
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
@@ -178,8 +182,10 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 	 datatest[leftCount] = leftChannel;
 	 leftCount = (leftCount+1)%256;
+	 
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, gain*sine_table[loop]);
+	 loop = (loop + 1) % 10;
 //	 /****************************************/
-
 }
 
 

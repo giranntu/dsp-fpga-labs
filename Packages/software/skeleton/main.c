@@ -146,13 +146,6 @@ void system_initialization(){
 	 IOWR_ALTERA_AVALON_PIO_DATA(SCLK_BASE, 0); // Initialize SCLK to high
 }
 
-//------------------------------------------------------------------
-short loop = 0; //table index
-short gain = 10; //gain factor
-//short sine_table[8]={0,707,1000,707,0,-707,-1000,-707}; //sine values
-short sine_table[10]={0,841,909,141,-757,-959,-279,657,989,412}; //sine values
-
-//------------------------------------------------------------------
 /*
 Based on the example, Sine8_LED.c Sine generation with DIP switch control, given in the
 lecture note 2, generate an 800Hz sine wave with an 8KHz sampling rate (10 samples per period) and
@@ -175,8 +168,7 @@ int main(void) {
 	 int UARTData[256];
 	 int i;
 	 for(i=0; i<256; i++){
-		 UARTData[i] = (int) 1000 * sin(2*PI*i/256);
-		 //UARTData[ii] = sine_table[ii%10];
+		 UARTData[i] = sine_table[i%10];
 	 }
 	 i = 0;
 	 /*Your main infinity while loop*/
@@ -187,16 +179,7 @@ int main(void) {
 			 }
 			 uartStartSendFlag = 0;
 		 }
-
-		 if(IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE) == 1) // if DIP switch #0 on
-		 {
-			 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, 0x01); //turn LED #0 ON
-			 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, gain*sine_table[loop]); //output to AIC23 D/A
-			 if (loop < 9) ++loop; //check for end of table
-			 else loop = 0; //reinit loop index
-
-		 }
-		 else IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, 0x00);
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
 	 }
 
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
