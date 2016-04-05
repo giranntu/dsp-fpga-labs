@@ -93,15 +93,15 @@ OBJ_DIR := ./obj
 
 # This following VERSION comment indicates the version of the tool used to 
 # generate this makefile. A makefile variable is provided for VERSION as well. 
-# ACDS_VERSION: 15.1
-ACDS_VERSION := 15.1
+# ACDS_VERSION: 12.1
+ACDS_VERSION := 12.1
 
 # This following BUILD_NUMBER comment indicates the build number of the tool 
 # used to generate this makefile. 
-# BUILD_NUMBER: 189
+# BUILD_NUMBER: 177
 
 SETTINGS_FILE := settings.bsp
-SOPC_FILE := U:/443/Packages/de2i_150.sopcinfo
+SOPC_FILE := C:/Users/Jake/Desktop/443/Packages/de2i_150.sopcinfo
 
 #-------------------------------------------------------------------------------
 #                             TOOL & COMMAND DEFINITIONS
@@ -255,7 +255,6 @@ altera_nios2_qsys_hal_driver_C_LIB_SRCS := \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_dcache_flush.c \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_dcache_flush_all.c \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_dcache_flush_no_writeback.c \
-	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_ecc_fatal_exception.c \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_instruction_exception_entry.c \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_irq_register.c \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_iic.c \
@@ -268,7 +267,6 @@ altera_nios2_qsys_hal_driver_C_LIB_SRCS := \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_gmon.c
 
 altera_nios2_qsys_hal_driver_ASM_LIB_SRCS := \
-	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_ecc_fatal_entry.S \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_exception_entry.S \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_exception_trap.S \
 	$(altera_nios2_qsys_hal_driver_SRCS_ROOT)/src/alt_exception_muldiv.S \
@@ -323,7 +321,6 @@ hal_C_LIB_SRCS := \
 	$(hal_SRCS_ROOT)/src/alt_open.c \
 	$(hal_SRCS_ROOT)/src/alt_printf.c \
 	$(hal_SRCS_ROOT)/src/alt_putchar.c \
-	$(hal_SRCS_ROOT)/src/alt_putcharbuf.c \
 	$(hal_SRCS_ROOT)/src/alt_putstr.c \
 	$(hal_SRCS_ROOT)/src/alt_read.c \
 	$(hal_SRCS_ROOT)/src/alt_release_fd.c \
@@ -747,13 +744,8 @@ $(OBJ_DIR)/%.i: %.cxx
 #------------------------------------------------------------------------------
 #                               NEWLIB RULES
 #------------------------------------------------------------------------------
-
-ifneq ($(COMPILE_NEWLIB),)
-NEWLIB_FLAGS += $(BSP_CFLAGS)
-endif
-
 ifneq ($(NEWLIB_DIR),)
-$(NEWLIB_DIR):
+$(NEWLIB_DIR): 
 	@$(ECHO) Creating $(NEWLIB_DIR)...
 	nios2-newlib-gen --no-multilib $(NEWLIB_DIR)-build-tmp $(NEWLIB_DIR) --custom "$(NEWLIB_FLAGS)"		
 	@$(ECHO) Removing $(NEWLIB_DIR)-build-tmp...

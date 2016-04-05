@@ -2,9 +2,9 @@
  * linker.x - Linker script
  *
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'de2i_150'
- * SOPC Builder design path: U:/443/Packages/de2i_150.sopcinfo
+ * SOPC Builder design path: C:/Users/Jake/Desktop/443/Packages/de2i_150.sopcinfo
  *
- * Generated: Sat Apr 02 14:27:51 PDT 2016
+ * Generated: Tue Apr 05 12:25:02 PDT 2016
  */
 
 /*
@@ -91,7 +91,6 @@ SECTIONS
         KEEP (*(.irq));
         KEEP (*(.exceptions.entry.label));
         KEEP (*(.exceptions.entry.user));
-        KEEP (*(.exceptions.entry.ecc_fatal));
         KEEP (*(.exceptions.entry));
         KEEP (*(.exceptions.irqtest.user));
         KEEP (*(.exceptions.irqtest));
@@ -195,7 +194,7 @@ SECTIONS
         PROVIDE (__fini_array_end = ABSOLUTE(.));
         SORT(CONSTRUCTORS)
         KEEP (*(.eh_frame))
-        *(.gcc_except_table .gcc_except_table.*)
+        *(.gcc_except_table)
         *(.dynamic)
         PROVIDE (__CTOR_LIST__ = ABSOLUTE(.));
         KEEP (*(.ctors))
@@ -207,7 +206,7 @@ SECTIONS
         PROVIDE (__DTOR_END__ = ABSOLUTE(.));
         KEEP (*(.jcr))
         . = ALIGN(4);
-    } > onchip_memory2 = 0x3a880100 /* NOP instruction (always in big-endian byte ordering) */
+    } > onchip_memory2 = 0x3a880100 /* Nios II NOP instruction */
 
     .rodata :
     {
@@ -310,7 +309,7 @@ SECTIONS
     .onchip_memory2 LOADADDR (.bss) + SIZEOF (.bss) : AT ( LOADADDR (.bss) + SIZEOF (.bss) )
     {
         PROVIDE (_alt_partition_onchip_memory2_start = ABSOLUTE(.));
-        *(.onchip_memory2 .onchip_memory2. onchip_memory2.*)
+        *(.onchip_memory2. onchip_memory2.*)
         . = ALIGN(4);
         PROVIDE (_alt_partition_onchip_memory2_end = ABSOLUTE(.));
         _end = ABSOLUTE(.);

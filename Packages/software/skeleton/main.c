@@ -1,3 +1,7 @@
+/* HW1 QUESTION 1
+ * Jake and Jisoo
+ */
+
 /* This is the main file that contains the main function and the
  * main while(1) loop.
  * Once you understand our code, please feel free to modify them
