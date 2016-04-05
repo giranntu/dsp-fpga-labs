@@ -165,20 +165,12 @@ int main(void) {
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
 
-	 int UARTData[256];
 	 int i;
 	 for(i=0; i<256; i++){
 		 UARTData[i] = sine_table[i%10];
 	 }
-	 i = 0;
 	 /*Your main infinity while loop*/
 	 while(1){
-		 if (uartStartSendFlag) {
-			 for (i = 0; i<256; i++) {
-				uart_sendInt16(UARTData[i]);
-			 }
-			 uartStartSendFlag = 0;
-		 }
 		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
 	 }
 
