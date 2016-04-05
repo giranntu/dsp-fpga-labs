@@ -1,3 +1,7 @@
+/* HW1 QUESTION 3
+ * Jake and Jisoo
+ */
+
 /*
  * yourISR.h
  *
@@ -96,6 +100,16 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 /*Perform Jobs*/
 }
 
+
+// ------------------------------------------------------------
+short gain = 10;
+short loop = 0;
+short sine_f1[10]={0,588,951,951,588,0,-588,-951,-951,-588};
+short sine_f2[20]={0,809,951,309,-588,-1000,-588,309,951,809,0,-809,-951,-309,588,1000,588,-309,-951,-809};
+short sine_f3[4]={0,1000,0,-1000};
+int UARTData[256];
+// ------------------------------------------------------------
+
 /* Enable the flag to send recent
  * channel buffer to host computer.
  */
@@ -107,8 +121,8 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE, 0);
 
 	 uartStartSendFlag = 1;
-	 alt_irq_disable(leftready_id);
-	 alt_irq_disable(rightready_id);
+	 //alt_irq_disable(leftready_id);
+	 //alt_irq_disable(rightready_id);
 }
 
 /* Enable the flag to update the
@@ -177,8 +191,11 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
 	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 	 datatest[leftCount] = leftChannel;
-	 leftCount = (leftCount+1)%256;
-//	 /****************************************/
+	 leftCount++;
+	 // ************************************
+
+	 // reset leftCount to zero if it reaches 512*/
+	 leftCount = leftCount % 512;
 
 }
 

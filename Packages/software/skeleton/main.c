@@ -1,3 +1,7 @@
+/* HW1 QUESTION 3
+ * Jake and Jisoo
+ */
+
 /* This is the main file that contains the main function and the
  * main while(1) loop.
  * Once you understand our code, please feel free to modify them
@@ -150,28 +154,23 @@ void system_initialization(){
 int main(void) {
 	 system_initialization();
      // set frequency
-	 sampleFrequency = 0x000C; //8k
-	 //sampleFrequency = 0x0019; //32k
+	 // sampleFrequency = 0x000C; //8k
+	 sampleFrequency = 0x0019; //32k
 	 //sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
-
-	 int counter;
-	 int UARTData[128];
-	 int ii;
-	 for(ii=0; ii<128; ii++){
-		 UARTData[ii] = (int)1000*sin(2*PI*ii/128);
-	 }
+	 int i;
 
 	 /*Your main infinity while loop*/
 	 while(1){
-		 if(uartStartSendFlag){
-			for (counter=1; counter < 128; counter++){
-				uart_sendInt16(UARTData[counter]);
-			}
-			uartStartSendFlag = 0;
-		 }
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
+		 		 // send 512 data to matlab
+		 		 for (i = 0; i < 512; i++) {
+		 			 uart_sendInt16(datatest[i]);
+		 		 }
+
+		 	 // reset leftCount to zero if it reaches 512*/
 	 }
 
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/

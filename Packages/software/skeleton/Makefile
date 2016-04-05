@@ -147,7 +147,7 @@ C_SRCS += delay.c
 C_SRCS += i2s_control.c
 C_SRCS += spi_control.c
 C_SRCS += uart.c
-C_SRCS += main-q1.c
+C_SRCS += main.c
 CXX_SRCS :=
 ASM_SRCS :=
 
