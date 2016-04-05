@@ -1,3 +1,7 @@
+/* HW1 QUESTION 1
+ * Jake and Jisoo
+ */
+
 /*
  * yourISR.h
  *
@@ -74,6 +78,13 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
+// ------------------------------------------------------------
+short gain = 10;
+short loop = 0;
+short sine_table[10]={0,588,951,951,588,0,-588,-951,-951,-588};
+int UARTData[256];
+// ------------------------------------------------------------
+
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
 	 *switch0ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE);
@@ -82,8 +93,7 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
-
-
+	 alt_irq_enable(leftready_id);
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -109,6 +119,12 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 uartStartSendFlag = 1;
 	 alt_irq_disable(leftready_id);
 	 alt_irq_disable(rightready_id);
+
+	 // program
+	 int i;
+	 for (i = 0; i<256; i++) {
+		uart_sendInt16(UARTData[i]);
+	 }
 }
 
 /* Enable the flag to update the
@@ -173,15 +189,16 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 volatile int* leftreadyptr = (volatile int *)context;
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
-	 /*******Read, playback, store data*******/
+	 // --------- Read, playback, store data -----
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 	 datatest[leftCount] = leftChannel;
 	 leftCount = (leftCount+1)%256;
-//	 /****************************************/
 
+	 // sending sine wave to lineOut
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, gain*sine_table[loop]);
+	 loop = (loop + 1) % 10;
+	 //-------------------------------------------
 }
-
 
 /*  Detect right channel ready interrupt and do:
  *  Collect data,

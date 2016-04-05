@@ -1,3 +1,7 @@
+/* HW1 QUESTION 1
+ * Jake and Jisoo
+ */
+
 /* This is the main file that contains the main function and the
  * main while(1) loop.
  * Once you understand our code, please feel free to modify them
@@ -146,7 +150,15 @@ void system_initialization(){
 	 IOWR_ALTERA_AVALON_PIO_DATA(SCLK_BASE, 0); // Initialize SCLK to high
 }
 
-
+/*
+Based on the example, Sine8_LED.c Sine generation with DIP switch control, given in the
+lecture note 2, generate an 800Hz sine wave with an 8KHz sampling rate (10 samples per period) and
+output to the LINEOUT jack of the AIC23 daughter card. Use an oscilloscope attached to the LINEOUT jack
+to verify. Also take advantage of the data exporting via UART (see the example in Lecture Note 1 about
+transferring a chunk of data to Matlab via UART), use the appropriate Matlab command to plot the 256
+most recent output samples in the time domain, as well as the FFT magnitudes of these 256 samples.
+ *
+ * */
 int main(void) {
 	 system_initialization();
      // set frequency
@@ -157,21 +169,13 @@ int main(void) {
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
 
-	 int counter;
-	 int UARTData[128];
-	 int ii;
-	 for(ii=0; ii<128; ii++){
-		 UARTData[ii] = (int)1000*sin(2*PI*ii/128);
+	 int i;
+	 for(i=0; i<256; i++){
+		 UARTData[i] = sine_table[i%10];
 	 }
-
 	 /*Your main infinity while loop*/
 	 while(1){
-		 if(uartStartSendFlag){
-			for (counter=1; counter < 128; counter++){
-				uart_sendInt16(UARTData[counter]);
-			}
-			uartStartSendFlag = 0;
-		 }
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
 	 }
 
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
