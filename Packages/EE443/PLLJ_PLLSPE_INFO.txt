@@ -1,0 +1,10 @@
+PLL_Name	de2i_150:u0|de2i_150_altpll_0:altpll_0|de2i_150_altpll_0_altpll_9342:sd1|pll7
+PLLJITTER	25
+PLLSPEmax	84
+PLLSPEmin	-53
+
+PLL_Name	de2i_150:u0|de2i_150_clk_12mhz:clk_12mhz|de2i_150_clk_12mhz_altpll_a342:sd1|pll7
+PLLJITTER	30
+PLLSPEmax	84
+PLLSPEmin	-53
+

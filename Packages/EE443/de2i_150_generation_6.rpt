@@ -1,0 +1,560 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=C:/Users/zhwj814/Desktop/EE443/ --output-directory=C:/Users/zhwj814/Desktop/EE443/de2i_150/ --report-file=bsf:C:/Users/zhwj814/Desktop/EE443/de2i_150.bsf --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=C:/Users/zhwj814/Desktop/EE443/de2i_150.qsys
+Progress: Loading EE443/de2i_150.qsys
+Progress: Reading input file
+Progress: Adding clk_50 [clock_source 13.0]
+Progress: Parameterizing module clk_50
+Progress: Adding nios2_qsys [altera_nios2_qsys 13.0]
+Progress: Parameterizing module nios2_qsys
+Progress: Adding uart [altera_avalon_uart 13.0.1.99.2]
+Progress: Parameterizing module uart
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.0.1.99.2]
+Progress: Parameterizing module jtag_uart
+Progress: Adding sysid_qsys [altera_avalon_sysid_qsys 13.0]
+Progress: Parameterizing module sysid_qsys
+Progress: Adding led [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module led
+Progress: Adding switch0 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch0
+Progress: Adding key0 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key0
+Progress: Adding onchip_memory2 [altera_avalon_onchip_memory2 13.0.1.99.2]
+Progress: Parameterizing module onchip_memory2
+Progress: Adding adc [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module adc
+Progress: Adding cs [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module cs
+Progress: Adding sclk [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module sclk
+Progress: Adding sdin [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module sdin
+Progress: Adding din [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module din
+Progress: Adding bclk_in [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module bclk_in
+Progress: Adding lrcout [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module lrcout
+Progress: Adding dout [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module dout
+Progress: Adding bclk_out [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module bclk_out
+Progress: Adding lrcin [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module lrcin
+Progress: Adding key1 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key1
+Progress: Adding key2 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key2
+Progress: Adding key3 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key3
+Progress: Adding switch1 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch1
+Progress: Adding switch2 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch2
+Progress: Adding switch3 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch3
+Progress: Adding switch4 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch4
+Progress: Adding altpll_0 [altpll 13.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding leftdata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftdata
+Progress: Adding rightdata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightdata
+Progress: Adding leftready [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftready
+Progress: Adding rightready [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightready
+Progress: Adding leftsenddata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftsenddata
+Progress: Adding rightsenddata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightsenddata
+Progress: Adding clk_12mhz [altpll 13.0]
+Progress: Parameterizing module clk_12mhz
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: de2i_150.sysid_qsys: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: de2i_150.sysid_qsys: Time stamp will be automatically updated when this component is generated.
+Info: de2i_150.switch0: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key0: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.adc: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.bclk_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.lrcout: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.dout: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.bclk_out: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.lrcin: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key1: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key2: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key3: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch1: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch2: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch3: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch4: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.leftdata: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.rightdata: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.leftready: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.rightready: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: de2i_150.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.altpll_0: altpll_0.phasedone_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.areset_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.locked_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.phasedone_conduit must be exported, or connected to a matching conduit.
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=C:/Users/zhwj814/Desktop/EE443/ --output-directory=C:/Users/zhwj814/Desktop/EE443/de2i_150/synthesis/ --file-set=QUARTUS_SYNTH --report-file=sopcinfo:C:/Users/zhwj814/Desktop/EE443/de2i_150.sopcinfo --report-file=html:C:/Users/zhwj814/Desktop/EE443/de2i_150.html --report-file=qip:C:/Users/zhwj814/Desktop/EE443/de2i_150/synthesis/de2i_150.qip --report-file=cmp:C:/Users/zhwj814/Desktop/EE443/de2i_150.cmp --report-file=svd --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=C:/Users/zhwj814/Desktop/EE443/de2i_150.qsys --language=VERILOG
+Progress: Loading EE443/de2i_150.qsys
+Progress: Reading input file
+Progress: Adding clk_50 [clock_source 13.0]
+Progress: Parameterizing module clk_50
+Progress: Adding nios2_qsys [altera_nios2_qsys 13.0]
+Progress: Parameterizing module nios2_qsys
+Progress: Adding uart [altera_avalon_uart 13.0.1.99.2]
+Progress: Parameterizing module uart
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 13.0.1.99.2]
+Progress: Parameterizing module jtag_uart
+Progress: Adding sysid_qsys [altera_avalon_sysid_qsys 13.0]
+Progress: Parameterizing module sysid_qsys
+Progress: Adding led [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module led
+Progress: Adding switch0 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch0
+Progress: Adding key0 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key0
+Progress: Adding onchip_memory2 [altera_avalon_onchip_memory2 13.0.1.99.2]
+Progress: Parameterizing module onchip_memory2
+Progress: Adding adc [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module adc
+Progress: Adding cs [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module cs
+Progress: Adding sclk [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module sclk
+Progress: Adding sdin [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module sdin
+Progress: Adding din [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module din
+Progress: Adding bclk_in [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module bclk_in
+Progress: Adding lrcout [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module lrcout
+Progress: Adding dout [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module dout
+Progress: Adding bclk_out [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module bclk_out
+Progress: Adding lrcin [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module lrcin
+Progress: Adding key1 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key1
+Progress: Adding key2 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key2
+Progress: Adding key3 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module key3
+Progress: Adding switch1 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch1
+Progress: Adding switch2 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch2
+Progress: Adding switch3 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch3
+Progress: Adding switch4 [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module switch4
+Progress: Adding altpll_0 [altpll 13.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding leftdata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftdata
+Progress: Adding rightdata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightdata
+Progress: Adding leftready [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftready
+Progress: Adding rightready [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightready
+Progress: Adding leftsenddata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module leftsenddata
+Progress: Adding rightsenddata [altera_avalon_pio 13.0.1.99.2]
+Progress: Parameterizing module rightsenddata
+Progress: Adding clk_12mhz [altpll 13.0]
+Progress: Parameterizing module clk_12mhz
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: de2i_150.sysid_qsys: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: de2i_150.sysid_qsys: Time stamp will be automatically updated when this component is generated.
+Info: de2i_150.switch0: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key0: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.adc: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.bclk_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.lrcout: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.dout: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.bclk_out: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.lrcin: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key1: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key2: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.key3: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch1: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch2: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch3: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.switch4: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.leftdata: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.rightdata: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.leftready: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: de2i_150.rightready: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: de2i_150.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.altpll_0: altpll_0.phasedone_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.areset_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.locked_conduit must be exported, or connected to a matching conduit.
+Warning: de2i_150.clk_12mhz: clk_12mhz.phasedone_conduit must be exported, or connected to a matching conduit.
+Info: de2i_150: Generating de2i_150 "de2i_150" for QUARTUS_SYNTH
+Info: pipeline_bridge_swap_transform: After transform: 34 modules, 149 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_translator_transform: After transform: 69 modules, 287 connections
+Info: merlin_domain_transform: After transform: 140 modules, 765 connections
+Info: merlin_router_transform: After transform: 175 modules, 903 connections
+Info: merlin_traffic_limiter_transform: After transform: 177 modules, 913 connections
+Info: reset_adaptation_transform: After transform: 179 modules, 722 connections
+Info: merlin_network_to_switch_transform: After transform: 248 modules, 862 connections
+Info: Inserting clock-crossing logic between cmd_xbar_demux_001.src25 and cmd_xbar_mux_025.sink0
+Info: Inserting clock-crossing logic between cmd_xbar_demux_001.src32 and cmd_xbar_mux_032.sink0
+Info: Inserting clock-crossing logic between rsp_xbar_demux_025.src0 and rsp_xbar_mux_001.sink25
+Info: Inserting clock-crossing logic between rsp_xbar_demux_032.src0 and rsp_xbar_mux_001.sink32
+Info: com_altera_sopcmodel_transforms_avalon_ClockCrossingTransform: After transform: 252 modules, 882 connections
+Info: limiter_update_transform: After transform: 252 modules, 884 connections
+Info: merlin_mm_transform: After transform: 252 modules, 884 connections
+Info: merlin_interrupt_mapper_transform: After transform: 253 modules, 887 connections
+Warning: de2i_150: "No matching role found for uart:s1:dataavailable (dataavailable)"
+Warning: de2i_150: "No matching role found for uart:s1:readyfordata (readyfordata)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Warning: de2i_150: "No matching role found for rst_controller:reset_out:reset_req (reset_req)"
+Info: nios2_qsys: Starting RTL generation for module 'de2i_150_nios2_qsys'
+Info: nios2_qsys:   Generation command is [exec C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2/eperl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2/cpu_lib -I C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2/nios_lib -I C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2 -I C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2 -- C:/altera/13.0sp1/quartus/../ip/altera/nios2_ip/altera_nios2/generate_rtl.epl --name=de2i_150_nios2_qsys --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0001_nios2_qsys_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0001_nios2_qsys_gen//de2i_150_nios2_qsys_processor_configuration.pl  --do_build_sim=0    --bogus  ]
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*) Starting Nios II generation
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*)   Checking for plaintext license.
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*)   Couldn't query license setup in Quartus directory C:/altera/13.0sp1/quartus
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*)   Plaintext license not found.
+Info: nios2_qsys: # 2014.02.14 17:17:45 (*)   Checking for encrypted license (non-evaluation).
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)   Couldn't query license setup in Quartus directory C:/altera/13.0sp1/quartus
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)   Encrypted license found.  SOF will not be time-limited.
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)   Elaborating CPU configuration settings
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)   Creating all objects for CPU
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)     Testbench
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)     Instruction decoding
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)       Instruction fields
+Info: nios2_qsys: # 2014.02.14 17:17:46 (*)       Instruction decodes
+Info: nios2_qsys: # 2014.02.14 17:17:47 (*)       Signals for RTL simulation waveforms
+Info: nios2_qsys: # 2014.02.14 17:17:47 (*)       Instruction controls
+Info: nios2_qsys: # 2014.02.14 17:17:47 (*)     Pipeline frontend
+Info: nios2_qsys: # 2014.02.14 17:17:47 (*)     Pipeline backend
+Info: nios2_qsys: # 2014.02.14 17:17:50 (*)   Generating RTL from CPU objects
+Info: nios2_qsys: # 2014.02.14 17:17:53 (*)   Creating encrypted RTL
+Info: nios2_qsys: # 2014.02.14 17:17:55 (*) Done Nios II generation
+Info: nios2_qsys: Done RTL generation for module 'de2i_150_nios2_qsys'
+Info: nios2_qsys: "de2i_150" instantiated altera_nios2_qsys "nios2_qsys"
+Info: uart: Starting RTL generation for module 'de2i_150_uart'
+Info: uart:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=de2i_150_uart --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0002_uart_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0002_uart_gen//de2i_150_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: uart: Done RTL generation for module 'de2i_150_uart'
+Info: uart: "de2i_150" instantiated altera_avalon_uart "uart"
+Info: jtag_uart: Starting RTL generation for module 'de2i_150_jtag_uart'
+Info: jtag_uart:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=de2i_150_jtag_uart --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0003_jtag_uart_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0003_jtag_uart_gen//de2i_150_jtag_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: jtag_uart: Done RTL generation for module 'de2i_150_jtag_uart'
+Info: jtag_uart: "de2i_150" instantiated altera_avalon_jtag_uart "jtag_uart"
+Info: sysid_qsys: "de2i_150" instantiated altera_avalon_sysid_qsys "sysid_qsys"
+Info: led: Starting RTL generation for module 'de2i_150_led'
+Info: led:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_led --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0005_led_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0005_led_gen//de2i_150_led_component_configuration.pl  --do_build_sim=0  ]
+Info: led: Done RTL generation for module 'de2i_150_led'
+Info: led: "de2i_150" instantiated altera_avalon_pio "led"
+Info: switch0: Starting RTL generation for module 'de2i_150_switch0'
+Info: switch0:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_switch0 --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0006_switch0_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0006_switch0_gen//de2i_150_switch0_component_configuration.pl  --do_build_sim=0  ]
+Info: switch0: Done RTL generation for module 'de2i_150_switch0'
+Info: switch0: "de2i_150" instantiated altera_avalon_pio "switch0"
+Info: key0: Starting RTL generation for module 'de2i_150_key0'
+Info: key0:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_key0 --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0007_key0_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0007_key0_gen//de2i_150_key0_component_configuration.pl  --do_build_sim=0  ]
+Info: key0: Done RTL generation for module 'de2i_150_key0'
+Info: key0: "de2i_150" instantiated altera_avalon_pio "key0"
+Info: onchip_memory2: Starting RTL generation for module 'de2i_150_onchip_memory2'
+Info: onchip_memory2:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_onchip_memory2 --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0008_onchip_memory2_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0008_onchip_memory2_gen//de2i_150_onchip_memory2_component_configuration.pl  --do_build_sim=0  ]
+Info: onchip_memory2: Done RTL generation for module 'de2i_150_onchip_memory2'
+Info: onchip_memory2: "de2i_150" instantiated altera_avalon_onchip_memory2 "onchip_memory2"
+Info: adc: Starting RTL generation for module 'de2i_150_adc'
+Info: adc:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_adc --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0009_adc_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0009_adc_gen//de2i_150_adc_component_configuration.pl  --do_build_sim=0  ]
+Info: adc: Done RTL generation for module 'de2i_150_adc'
+Info: adc: "de2i_150" instantiated altera_avalon_pio "adc"
+Info: cs: Starting RTL generation for module 'de2i_150_cs'
+Info: cs:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_cs --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0010_cs_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0010_cs_gen//de2i_150_cs_component_configuration.pl  --do_build_sim=0  ]
+Info: cs: Done RTL generation for module 'de2i_150_cs'
+Info: cs: "de2i_150" instantiated altera_avalon_pio "cs"
+Info: dout: Starting RTL generation for module 'de2i_150_dout'
+Info: dout:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_dout --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0011_dout_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0011_dout_gen//de2i_150_dout_component_configuration.pl  --do_build_sim=0  ]
+Info: dout: Done RTL generation for module 'de2i_150_dout'
+Info: dout: "de2i_150" instantiated altera_avalon_pio "dout"
+Info: altpll_0: "de2i_150" instantiated altpll "altpll_0"
+Info: leftdata: Starting RTL generation for module 'de2i_150_leftdata'
+Info: leftdata:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_leftdata --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0014_leftdata_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0014_leftdata_gen//de2i_150_leftdata_component_configuration.pl  --do_build_sim=0  ]
+Info: leftdata: Done RTL generation for module 'de2i_150_leftdata'
+Info: leftdata: "de2i_150" instantiated altera_avalon_pio "leftdata"
+Info: leftsenddata: Starting RTL generation for module 'de2i_150_leftsenddata'
+Info: leftsenddata:   Generation command is [exec C:/altera/13.0sp1/quartus/bin/perl/bin/perl.exe -I C:/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I C:/altera/13.0sp1/quartus/sopc_builder/bin/europa -I C:/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I C:/altera/13.0sp1/quartus/sopc_builder/bin -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_leftsenddata --dir=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0015_leftsenddata_gen/ --quartus_dir=C:/altera/13.0sp1/quartus --verilog --config=C:/Users/zhwj814/AppData/Local/Temp/alt6116_3594652789569280285.dir/0015_leftsenddata_gen//de2i_150_leftsenddata_component_configuration.pl  --do_build_sim=0  ]
+Info: leftsenddata: Done RTL generation for module 'de2i_150_leftsenddata'
+Info: leftsenddata: "de2i_150" instantiated altera_avalon_pio "leftsenddata"
+Info: clk_12mhz: "de2i_150" instantiated altpll "clk_12mhz"
+Info: nios2_qsys_instruction_master_translator: "de2i_150" instantiated altera_merlin_master_translator "nios2_qsys_instruction_master_translator"
+Info: nios2_qsys_jtag_debug_module_translator: "de2i_150" instantiated altera_merlin_slave_translator "nios2_qsys_jtag_debug_module_translator"
+Info: nios2_qsys_instruction_master_translator_avalon_universal_master_0_agent: "de2i_150" instantiated altera_merlin_master_agent "nios2_qsys_instruction_master_translator_avalon_universal_master_0_agent"
+Info: nios2_qsys_jtag_debug_module_translator_avalon_universal_slave_0_agent: "de2i_150" instantiated altera_merlin_slave_agent "nios2_qsys_jtag_debug_module_translator_avalon_universal_slave_0_agent"
+Info: nios2_qsys_jtag_debug_module_translator_avalon_universal_slave_0_agent_rsp_fifo: "de2i_150" instantiated altera_avalon_sc_fifo "nios2_qsys_jtag_debug_module_translator_avalon_universal_slave_0_agent_rsp_fifo"
+Info: addr_router: "de2i_150" instantiated altera_merlin_router "addr_router"
+Info: addr_router_001: "de2i_150" instantiated altera_merlin_router "addr_router_001"
+Info: id_router: "de2i_150" instantiated altera_merlin_router "id_router"
+Info: id_router_002: "de2i_150" instantiated altera_merlin_router "id_router_002"
+Info: limiter: "de2i_150" instantiated altera_merlin_traffic_limiter "limiter"
+Info: rst_controller: "de2i_150" instantiated altera_reset_controller "rst_controller"
+Info: cmd_xbar_demux: "de2i_150" instantiated altera_merlin_demultiplexer "cmd_xbar_demux"
+Info: cmd_xbar_demux_001: "de2i_150" instantiated altera_merlin_demultiplexer "cmd_xbar_demux_001"
+Info: cmd_xbar_mux: "de2i_150" instantiated altera_merlin_multiplexer "cmd_xbar_mux"
+Info: rsp_xbar_demux: "de2i_150" instantiated altera_merlin_demultiplexer "rsp_xbar_demux"
+Info: rsp_xbar_demux_002: "de2i_150" instantiated altera_merlin_demultiplexer "rsp_xbar_demux_002"
+Info: rsp_xbar_mux: "de2i_150" instantiated altera_merlin_multiplexer "rsp_xbar_mux"
+Info: Reusing file C:/Users/zhwj814/Desktop/EE443/de2i_150/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_xbar_mux_001: "de2i_150" instantiated altera_merlin_multiplexer "rsp_xbar_mux_001"
+Info: Reusing file C:/Users/zhwj814/Desktop/EE443/de2i_150/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: crosser: "de2i_150" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: Reusing file C:/Users/zhwj814/Desktop/EE443/de2i_150/synthesis/submodules/altera_avalon_st_pipeline_base.v
+Info: irq_mapper: "de2i_150" instantiated altera_irq_mapper "irq_mapper"
+Info: de2i_150: Done de2i_150" with 36 modules, 285 files, 6715072 bytes
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
