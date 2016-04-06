@@ -197,6 +197,7 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE, 0);
 
 	 uartStartSendFlag = 1;
+	 /*
 	 reset = 1 ^ reset;
 	 if (reset) {
 		 alt_irq_disable(leftready_id);
@@ -204,7 +205,7 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 } else {
 		 alt_irq_enable(leftready_id);
 		 alt_irq_enable(rightready_id);
-	 }
+	 }*/
 }
 
 /* Enable the flag to update the
