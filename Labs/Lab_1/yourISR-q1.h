@@ -17,6 +17,8 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
+#define UART_BUFFER_SIZE 256
+
 //Value for interrupt ID
 extern alt_u32 switch0_id;
 extern alt_u32 switch1_id;
@@ -41,7 +43,7 @@ extern int sampleFrequency;
 extern alt_16 leftChannelData[BUFFERSIZE];
 extern alt_16 rightChannelData[BUFFERSIZE];
 extern int convResultBuffer[CONVBUFFSIZE];
-extern alt_16 datatest[256];
+extern alt_16 datatest[UART_BUFFER_SIZE];
 /*uart-global
  * RxHead: integer indicator tells you the index of where the
  * newest char data you received from host computer
@@ -82,7 +84,6 @@ extern int uart;
 short gain = 10;
 short loop = 0;
 short sine_f1[10]={0,588,951,951,588,0,-588,-951,-951,-588};
-int UARTData[256];
 // ------------------------------------------------------------
 
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
@@ -117,14 +118,8 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE, 0);
 
 	 uartStartSendFlag = 1;
-	 alt_irq_disable(leftready_id);
-	 alt_irq_disable(rightready_id);
-
-	 // program
-	 int i;
-	 for (i = 0; i<256; i++) {
-		uart_sendInt16(UARTData[i]);
-	 }
+//	 alt_irq_disable(leftready_id);
+//	 alt_irq_disable(rightready_id);
 }
 
 /* Enable the flag to update the
@@ -191,11 +186,11 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 // --------- Read, playback, store data -----
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	 datatest[leftCount] = leftChannel;
-	 leftCount = (leftCount+1)%256;
+	 datatest[leftCount] = gain * sine_f1[loop];
+	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 
 	 // sending sine wave to lineOut
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, gain*sine_table[loop]);
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, gain * sine_f1[loop]);
 	 loop = (loop + 1) % 10;
 	 //-------------------------------------------
 }
