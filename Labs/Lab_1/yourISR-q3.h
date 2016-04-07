@@ -17,6 +17,8 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
+#define UART_BUFFER_SIZE 512
+
 //Value for interrupt ID
 extern alt_u32 switch0_id;
 extern alt_u32 switch1_id;
@@ -45,7 +47,7 @@ extern int sampleFrequency;
 extern alt_16 leftChannelData[BUFFERSIZE];
 extern alt_16 rightChannelData[BUFFERSIZE];
 extern int convResultBuffer[CONVBUFFSIZE];
-extern alt_16 datatest[512];
+extern alt_16 datatest[UART_BUFFER_SIZE];
 /*uart-global
  * RxHead: integer indicator tells you the index of where the
  * newest char data you received from host computer
@@ -86,17 +88,13 @@ extern int uart;
 #define LEN1 10
 #define LEN2 20
 #define LEN3 4
-#define UART_BUFFER_SIZE 512
-short gain  = 1;
 short alpha = 0;
 short beta  = 0;
 short gamm = 0;
-int   loop = 0;
 short sine_f1[LEN1]={0,588,951,951,588,0,-588,-951,-951,-588};
 short sine_f2[LEN2]={0, 809, 951, 309,-588,-1000,-588, 309, 951, 809,
 					 0,-809,-951,-309, 588, 1000, 588,-309,-951,-809};
 short sine_f3[LEN3]={0,1000,0,-1000};
-int UARTData[UART_BUFFER_SIZE];
 // ------------------------------------------------------------
 
 // ----------- switch handlers --------------
@@ -270,13 +268,19 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
-	 int x_t = gain*(alpha*sine_f1[loop%LEN1] +
-					 beta*sine_f2[loop%LEN2] +
-					 gamm*sine_f3[loop%LEN3]);
+	 int normFactor = (alpha != 0) +
+			 	 	  (beta  != 0) +
+			 	 	  (gamm  != 0);
+	 if (!normFactor) {
+		 normFactor = 1;
+	 }
+	 int x_t = (alpha*sine_f1[leftCount % LEN1] +
+				beta *sine_f2[leftCount % LEN2] +
+				gamm *sine_f3[leftCount % LEN3]) / normFactor;
 	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE,x_t);
-	 UARTData[loop] = x_t;
+	 datatest[leftCount] = x_t;
 	 // reset leftCount to zero if it reaches 512*/
-	 loop = (loop + 1) % UART_BUFFER_SIZE;
+	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 }
 
 
