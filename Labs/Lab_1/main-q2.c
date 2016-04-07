@@ -67,7 +67,7 @@ int convResultBuffer[CONVBUFFSIZE];
  *
  * rx_buffer-> A ring buffer to collect uart data sent by host computer
  * */
-alt_16 datatest[256];
+alt_16 datatest[UART_BUFFER_SIZE];
 unsigned short RxHead=0;
 unsigned char rx_buffer[RX_BUFFER_SIZE];
 
@@ -165,14 +165,14 @@ int main(void) {
 	 /*Your main infinity while loop*/
 	 while(1){
 		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
-		 		 // send 512 data to matlab
-		 		 for (i = 0; i < 512; i++) {
-		 			 uart_sendInt16(datatest[i]);
-		 		 }
-
-		 	 // reset leftCount to zero if it reaches 512*/
+		 if (uartStartSendFlag) {
+			 // send 512 data to matlab
+			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
+				 uart_sendInt16(datatest[i]);
+			 }
+			 uartStartSendFlag = 0;
+		 }
 	 }
-
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
