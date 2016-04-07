@@ -17,6 +17,8 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
+#define UART_BUFFER_SIZE 512
+
 //Value for interrupt ID
 extern alt_u32 switch0_id;
 extern alt_u32 switch1_id;
@@ -41,7 +43,7 @@ extern int sampleFrequency;
 extern alt_16 leftChannelData[BUFFERSIZE];
 extern alt_16 rightChannelData[BUFFERSIZE];
 extern int convResultBuffer[CONVBUFFSIZE];
-extern alt_16 datatest[256];
+extern alt_16 datatest[UART_BUFFER_SIZE];
 /*uart-global
  * RxHead: integer indicator tells you the index of where the
  * newest char data you received from host computer
@@ -181,11 +183,8 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
 	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 	 datatest[leftCount] = leftChannel;
-	 leftCount++;
-	 // ************************************
-
 	 // reset leftCount to zero if it reaches 512*/
-	 leftCount = leftCount % 512;
+	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 
 }
 

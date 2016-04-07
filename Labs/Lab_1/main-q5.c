@@ -1,4 +1,4 @@
-/* HW1 QUESTION 2
+/* HW1 QUESTION 5
  * Jake and Jisoo
  */
 
@@ -7,8 +7,6 @@
  * Once you understand our code, please feel free to modify them
  * to meet your project or homework requirement
  */
-
-#define PI 3.141592
 
 /*Major header file includes all system function you need*/
 #include "system_init.h"
@@ -160,19 +158,18 @@ int main(void) {
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
-	 int i;
 
+	 int counter;
 	 /*Your main infinity while loop*/
 	 while(1){
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
-		 if (uartStartSendFlag) {
-			 // send 512 data to matlab
-			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				 uart_sendInt16(datatest[i]);
-			 }
-			 uartStartSendFlag = 0;
+		 if(uartStartSendFlag){
+			for (counter=1; counter < UART_BUFFER_SIZE; counter++){
+				uart_sendInt16(datatest[counter]);
+			}
+			uartStartSendFlag = 0;
 		 }
 	 }
+
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/

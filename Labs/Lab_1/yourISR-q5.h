@@ -1,4 +1,4 @@
-/* HW1 QUESTION 3
+/* HW1 QUESTION 5
  * Jake and Jisoo
  */
 
@@ -18,14 +18,11 @@
 #include "system_init.h"
 
 #define UART_BUFFER_SIZE 512
+#define PI 3.141592
 
 //Value for interrupt ID
 extern alt_u32 switch0_id;
 extern alt_u32 switch1_id;
-extern alt_u32 switch2_id;
-extern alt_u32 switch3_id;
-extern alt_u32 switch4_id;
-extern alt_u32 switch5_id;
 extern alt_u32 key0_id;
 extern alt_u32 key1_id;
 extern alt_u32 key2_id;
@@ -84,25 +81,6 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
-// ------------------------------------------------------------
-#define LEN1 10
-#define LEN2 20
-#define LEN3 4
-short alpha = 0;
-short beta  = 0;
-short gamm = 0;
-short sine_f1[LEN1]={0,588,951,951,588,0,-588,-951,-951,-588};
-short sine_f2[LEN2]={0, 809, 951, 309,-588,-1000,-588, 309, 951, 809,
-					 0,-809,-951,-309, 588, 1000, 588,-309,-951,-809};
-short sine_f3[LEN3]={0,1000,0,-1000};
-// ------------------------------------------------------------
-
-// ----------- switch handlers --------------
-// switch 0,1 controls alpha
-// switch 2,3 controls beta
-// switch 4,5 controls gamma
-// Bit convention:
-// e.g. switch1 = 1, switch0 = 0 will make alpha = 2
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
 	 *switch0ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE);
@@ -111,9 +89,6 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
-	 alpha = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE) << 1) |
-			 IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
-	 printf("alpha = %d\n", alpha);
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -124,69 +99,11 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE, 0);
 
 	 /*Perform Jobs*/
-	 alpha = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE) << 1) |
-			  IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
-	 printf("alpha = %d\n", alpha);
 }
-
-static void handle_switch2_interrupt(void* context, alt_u32 id) {
-	 volatile int* switch2ptr = (volatile int *)context;
-	 *switch2ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH2_BASE);
-
-	 /* Write to the edge capture register to reset it. */
-	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH2_BASE, 0);
-
-	 /*Perform Jobs*/
-	 beta = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH3_BASE) << 1) |
-			 IORD_ALTERA_AVALON_PIO_DATA(SWITCH2_BASE);
-	 printf("beta = %d\n", beta);
-}
-
-static void handle_switch3_interrupt(void* context, alt_u32 id) {
-	 volatile int* switch3ptr = (volatile int *)context;
-	 *switch3ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH3_BASE);
-
-	 /* Write to the edge capture register to reset it. */
-	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH3_BASE, 0);
-
-	 /*Perform Jobs*/
-	 beta = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH3_BASE) << 1) |
-			 IORD_ALTERA_AVALON_PIO_DATA(SWITCH2_BASE);
-	 printf("beta = %d\n", beta);
-}
-
-static void handle_switch4_interrupt(void* context, alt_u32 id) {
-	 volatile int* switch4ptr = (volatile int *)context;
-	 *switch4ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH4_BASE);
-
-	 /* Write to the edge capture register to reset it. */
-	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH4_BASE, 0);
-
-	 /*Perform Jobs*/
-	 gamm = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH5_BASE) << 1)|
-			 IORD_ALTERA_AVALON_PIO_DATA(SWITCH4_BASE);
-	 printf("gamm = %d\n", gamm);
-}
-
-static void handle_switch5_interrupt(void* context, alt_u32 id) {
-	 volatile int* switch5ptr = (volatile int *)context;
-	 *switch5ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH5_BASE);
-
-	 /* Write to the edge capture register to reset it. */
-	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH5_BASE, 0);
-
-	 /*Perform Jobs*/
-	 gamm = (IORD_ALTERA_AVALON_PIO_DATA(SWITCH5_BASE) << 1)|
-			 IORD_ALTERA_AVALON_PIO_DATA(SWITCH4_BASE);
-	 printf("gamm = %d\n", gamm);
-}
-
-// ---------------------------------------------------------------
 
 /* Enable the flag to send recent
  * channel buffer to host computer.
  */
-int reset = 0;
 static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 volatile int* key0ptr = (volatile int *)context;
 	 *key0ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE);
@@ -195,7 +112,8 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE, 0);
 
 	 uartStartSendFlag = 1;
-
+//	 alt_irq_disable(leftready_id);
+//	 alt_irq_disable(rightready_id);
 }
 
 /* Enable the flag to update the
@@ -237,6 +155,7 @@ static void handle_key3_interrupt(void* context, alt_u32 id) {
  *  instantly play back.
  *
  */
+
 int unsigned2signed(alt_16 unsign){
 	int result;
 	if(unsign>32767)
@@ -255,24 +174,29 @@ alt_16 signed2unsigned(int sign){
 	return result;
 }
 
+// -------------------------------------------------------
+short Fs = 8000;
+short f = 1000;
+float accum = 0;
+short amplitude = 100000;
+// -------------------------------------------------------
 static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 volatile int* leftreadyptr = (volatile int *)context;
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
-	 int normFactor = (alpha != 0) +
-			 	 	  (beta  != 0) +
-			 	 	  (gamm  != 0);
-	 if (!normFactor) {
-		 normFactor = 1;
+	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
+	 //	****************************************/
+	 float stepSize = 2 * PI * f / Fs;
+	 short sign = 1;
+	 if (leftChannel < accum) {
+		 sign = -1;
 	 }
-	 int x_t = (alpha*sine_f1[leftCount % LEN1] +
-				beta *sine_f2[leftCount % LEN2] +
-				gamm *sine_f3[leftCount % LEN3]) / normFactor;
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE,x_t);
-	 datatest[leftCount] = x_t;
-	 // reset leftCount to zero if it reaches 512*/
-	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
+	 accum = accum + sign * stepSize;
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, sign * amplitude);
+	 datatest[leftCount] = sign * amplitude;
+	 leftCount = (leftCount+1)%UART_BUFFER_SIZE;
+	 //	****************************************/
 }
 
 

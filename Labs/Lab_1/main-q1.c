@@ -67,7 +67,7 @@ int convResultBuffer[CONVBUFFSIZE];
  *
  * rx_buffer-> A ring buffer to collect uart data sent by host computer
  * */
-alt_16 datatest[256];
+alt_16 datatest[UART_BUFFER_SIZE];
 unsigned short RxHead=0;
 unsigned char rx_buffer[RX_BUFFER_SIZE];
 
@@ -169,12 +169,15 @@ int main(void) {
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
 
-	 int i;
-	 for(i=0; i<256; i++){
-		 UARTData[i] = sine_table[i%10];
-	 }
 	 /*Your main infinity while loop*/
+	 int i;
 	 while(1){
+		 if (uartStartSendFlag) {
+			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
+				uart_sendInt16(datatest[i]);
+			 }
+			 uartStartSendFlag = 0;
+		 }
 		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
 	 }
 
