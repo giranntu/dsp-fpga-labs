@@ -1,7 +1,3 @@
-/* HW1 QUESTION 3
- * Jake and Jisoo
- */
-
 /* This is the main file that contains the main function and the
  * main while(1) loop.
  * Once you understand our code, please feel free to modify them
@@ -154,24 +150,16 @@ void system_initialization(){
 int main(void) {
 	 system_initialization();
      // set frequency
-	 // sampleFrequency = 0x000C; //8k
-	 sampleFrequency = 0x0019; //32k
-	 //sampleFrequency = 0x0023; //44.1k
+	 //sampleFrequency = 0x000C; //8k
+	 //sampleFrequency = 0x0019; //32k
+	 sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
-	 int i;
+
 
 	 /*Your main infinity while loop*/
-	 while(1){
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE));
-		 		 // send 512 data to matlab
-		 		 for (i = 0; i < 512; i++) {
-		 			 uart_sendInt16(datatest[i]);
-		 		 }
-
-		 	 // reset leftCount to zero if it reaches 512*/
-	 }
+	 while(1);
 
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/

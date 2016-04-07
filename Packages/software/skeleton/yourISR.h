@@ -1,7 +1,3 @@
-/* HW1 QUESTION 3
- * Jake and Jisoo
- */
-
 /*
  * yourISR.h
  *
@@ -78,6 +74,8 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
+//RIGHT CHANNEL SWITCH
+int left_on = 1;
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
 	 *switch0ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE);
@@ -85,11 +83,13 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
-	 /*Perform Jobs*/
-
-
+	 // Set mute state
+	 left_on = IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
+	 printf("Right : %d\n", left_on);
 }
 
+//LEFT CHANNEL SWITCH
+int right_on = 1;
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch1ptr = (volatile int *)context;
 	 *switch1ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE);
@@ -97,18 +97,11 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE, 0);
 
-	 /*Perform Jobs*/
+	 // Set mute state
+	 right_on = IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE);
+	 printf("Left : %d\n", right_on);
+
 }
-
-
-// ------------------------------------------------------------
-short gain = 10;
-short loop = 0;
-short sine_f1[10]={0,588,951,951,588,0,-588,-951,-951,-588};
-short sine_f2[20]={0,809,951,309,-588,-1000,-588,309,951,809,0,-809,-951,-309,588,1000,588,-309,-951,-809};
-short sine_f3[4]={0,1000,0,-1000};
-int UARTData[256];
-// ------------------------------------------------------------
 
 /* Enable the flag to send recent
  * channel buffer to host computer.
@@ -121,8 +114,8 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE, 0);
 
 	 uartStartSendFlag = 1;
-	 //alt_irq_disable(leftready_id);
-	 //alt_irq_disable(rightready_id);
+	 alt_irq_disable(leftready_id);
+	 alt_irq_disable(rightready_id);
 }
 
 /* Enable the flag to update the
@@ -189,13 +182,15 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, left_on*leftChannel);
 	 datatest[leftCount] = leftChannel;
-	 leftCount++;
-	 // ************************************
-
-	 // reset leftCount to zero if it reaches 512*/
-	 leftCount = leftCount % 512;
+	 if (left_on) {
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) | 0x01); // LED ON
+	 } else {
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) & ~0x01); // LED OFF
+	 }
+	 leftCount = (leftCount+1)%256;
+//	 /****************************************/
 
 }
 
@@ -211,8 +206,13 @@ static void handle_rightready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(RIGHTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 rightChannel = IORD_ALTERA_AVALON_PIO_DATA(RIGHTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(RIGHTSENDDATA_BASE, rightChannel);
+	 IOWR_ALTERA_AVALON_PIO_DATA(RIGHTSENDDATA_BASE, right_on*rightChannel);
 	 rightChannelData[rightCount] = rightChannel;
+	 if (right_on) {
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) | 0x02); // LED ON
+	 } else {
+		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) & ~0x02); // LED OFF
+	 }
 	 rightCount = (rightCount+1) % BUFFERSIZE;
 	 /****************************************/
 }
