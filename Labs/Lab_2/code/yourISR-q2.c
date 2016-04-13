@@ -1,4 +1,4 @@
-/* HW2 QUESTION 1
+/* HW2 QUESTION 2
  * Jake and Jisoo
  */
 
@@ -80,66 +80,32 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
-// ------ MAX and MIN -------
-#define MAX 9000
-#define MIN -1000
+// ------------------------------------------
+#define MAX_DELAY 1000
+#define MIN_DELAY 0
+#define BUFFER_LENGTH 5000
+int sw0State = 0;
+float gain = 0.6;
+int sampleDelay = 0;
+short delayInc = 50;
+alt_16 delayedBuffer[BUFFER_LENGTH];
 
-// ------ Quantization Table -------
-int quantTable3[2] = {
-	(2*MAX+6*MIN)/8,
-	(6*MAX+2*MIN)/8,
-};
-
-int quantTable5[4] = {
-	(MAX+7*MIN)/8,
-	(3*MAX+5*MIN)/8,
-	(5*MAX+3*MIN)/8,
-	(7*MAX+MIN)/8,
-};
-
-int quantTable7[6] = {
-	(MAX+7*MIN)/8,
-	(2*MAX+6*MIN)/8,
-	(3*MAX+5*MIN)/8,
-	(5*MAX+3*MIN)/8,
-	(6*MAX+2*MIN)/8,
-	(7*MAX+MIN)/8,
-};
-
-// ------ Level-n Table -------
-float levelTable3[3] = {-1, 0, 1};
-float levelTable5[5] = {-1, -0.5, 0, 0.5, 1};
-float levelTable7[7] = {-1, -0.75, -0.5, 0, 0.5, 0.75, 1};
-// ------ Current Level -------
-short level = 3;
-// ------ UART data -----------
-float UARTData[UART_BUFFER_SIZE];
-
-// ---------------------------------
-static double getQuantizedValue(int input) {
-/*	if (input < 0) {
-		input *= -1;
-	}*/
-	float* quantTable;
-	float* levelTable;
-	if (level == 7) {
-		quantTable = quantTable7;
-		levelTable = levelTable7;
-	} else if (level == 5) {
-		quantTable = quantTable5;
-		levelTable = levelTable5;
-	} else { // level == 3
-		quantTable = quantTable3;
-		levelTable = levelTable3;
+// either -1 or 1
+void changeDelay(short sign) {
+	sampleDelay = sampleDelay + sign * delayInc;
+	if (sampleDelay < MIN_DELAY) {
+		sampleDelay = MIN_DELAY;
+	} else if (sampleDelay > MAX_DELAY) {
+		sampleDelay = MAX_DELAY;
 	}
+	printf("sampleDelay = %d\n", sampleDelay);
+}
 
-	int i = 0;
-	while (input > quantTable[i]) {
-		i++;
+static int getEchoSample(int index) {
+	if (index == 0) {
+		return 0;
 	}
-	// length of levelTable_n is one more than quantTable's length
-	// which will point to correct index at the levelTable
-	return levelTable[i];
+	return gain * delayedBuffer[(BUFFER_LENGTH + leftCount - index) % BUFFER_LENGTH];
 }
 
 // ----------- switch handlers --------------
@@ -151,6 +117,7 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
+	 sw0State = IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -190,6 +157,7 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 /* Enable the flag to update the
  * ADC sampling frequency on AIC23.
  */
+// increment the delay
 static void handle_key1_interrupt(void* context, alt_u32 id) {
 	 volatile int* key1ptr = (volatile int *)context;
 	 *key1ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE);
@@ -197,20 +165,18 @@ static void handle_key1_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY1_BASE, 0);
 
-	 //IOWR_ALTERA_AVALON_PIO_IRQ_MASK(SWITCH1_BASE, 0x01);
 	 setFreqFlag = 1;
-	 level = 3;
-	 printf("level = 3\n");
+	 changeDelay(1);
 }
 
+// decrement the delay
 static void handle_key2_interrupt(void* context, alt_u32 id) {
 	 volatile int* key2ptr = (volatile int *)context;
 	 *key2ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE);
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE, 0);
-	 level = 5;
-	 printf("level = 5\n");
+	 changeDelay(-1);
 }
 
 static void handle_key3_interrupt(void* context, alt_u32 id) {
@@ -219,9 +185,6 @@ static void handle_key3_interrupt(void* context, alt_u32 id) {
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY3_BASE, 0);
-
-	 level = 7;
-	 printf("level = 7\n");
 }
 
 /*  Detect left channel ready interrupt and do:
@@ -254,16 +217,15 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
-	 leftChannel = unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
-	 if (leftCount == 0) {
-		 printf("leftChannel = %d\n", leftChannel);
-	 }
-	 double quantLeftChannel = getQuantizedValue(leftChannel);
+	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
 
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, MAX * quantLeftChannel);
-	 UARTData[leftCount] = MAX * quantLeftChannel;
+	 // calculate current sample
+	 // put it into buffer
+	 int x_t = sw0State * getEchoSample(sampleDelay) + leftChannel;
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, x_t);
+	 delayedBuffer[leftCount] = x_t;
 	 // reset leftCount to zero if it reaches 512*/
-	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
+	 leftCount = (leftCount + 1) % BUFFER_LENGTH;
 }
 
 
