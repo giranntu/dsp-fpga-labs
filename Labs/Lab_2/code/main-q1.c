@@ -173,7 +173,7 @@ int main(void) {
 		 if (uartStartSendFlag) {
 			 // send 512 data to matlab
 			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				 uart_sendInt16(datatest[i]);
+				 uart_sendFloat(UARTData[i]);
 			 }
 			 uartStartSendFlag = 0;
 		 }

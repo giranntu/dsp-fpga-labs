@@ -82,7 +82,7 @@ extern int uart;
 
 // ------ MAX and MIN -------
 #define MAX 9000
-#define MIN -100
+#define MIN -1000
 
 // ------ Quantization Table -------
 int quantTable3[2] = {
@@ -116,7 +116,10 @@ short level = 3;
 float UARTData[UART_BUFFER_SIZE];
 
 // ---------------------------------
-static double getQuantizedValue(double input) {
+static double getQuantizedValue(int input) {
+/*	if (input < 0) {
+		input *= -1;
+	}*/
 	float* quantTable;
 	float* levelTable;
 	if (level == 7) {
@@ -139,21 +142,6 @@ static double getQuantizedValue(double input) {
 	return levelTable[i];
 }
 
-static void setLevel() {
-	alt_irq_disable(leftready_id);
-	alt_irq_disable(rightready_id);
-	if (IORD_ALTERA_AVALON_PIO_DATA(SWITCH2_BASE)) {
-		level = 7;
-	} else if (IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE)) {
-		level = 5;
-	} else { // IORD_ALTERA_AVALON_PIO_DATA(SWITCH0);
-		// default level is 3
-		level = 3;
-	}
-	alt_irq_enable(leftready_id);
-	alt_irq_enable(rightready_id);
-}
-
 // ----------- switch handlers --------------
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
@@ -163,7 +151,6 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
-	 setLevel();
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -174,7 +161,6 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE, 0);
 
 	 /*Perform Jobs*/
-	 setLevel();
 }
 
 static void handle_switch2_interrupt(void* context, alt_u32 id) {
@@ -185,7 +171,6 @@ static void handle_switch2_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH2_BASE, 0);
 
 	 /*Perform Jobs*/
-	 setLevel();
 }
 
 
@@ -214,9 +199,8 @@ static void handle_key1_interrupt(void* context, alt_u32 id) {
 
 	 //IOWR_ALTERA_AVALON_PIO_IRQ_MASK(SWITCH1_BASE, 0x01);
 	 setFreqFlag = 1;
-
-	 alt_irq_enable(leftready_id);
-	 alt_irq_enable(rightready_id);
+	 level = 3;
+	 printf("level = 3\n");
 }
 
 static void handle_key2_interrupt(void* context, alt_u32 id) {
@@ -225,9 +209,8 @@ static void handle_key2_interrupt(void* context, alt_u32 id) {
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE, 0);
-	 alt_irq_disable(leftready_id);
-	 alt_irq_disable(rightready_id);
-
+	 level = 5;
+	 printf("level = 5\n");
 }
 
 static void handle_key3_interrupt(void* context, alt_u32 id) {
@@ -237,7 +220,8 @@ static void handle_key3_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY3_BASE, 0);
 
-	 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, 0x10);
+	 level = 7;
+	 printf("level = 7\n");
 }
 
 /*  Detect left channel ready interrupt and do:
@@ -271,9 +255,13 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 leftChannel = unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
+	 if (leftCount == 0) {
+		 printf("leftChannel = %d\n", leftChannel);
+	 }
 	 double quantLeftChannel = getQuantizedValue(leftChannel);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, 10000*MAX * quantLeftChannel);
-	 datatest[leftCount] = leftChannel;
+
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, MAX * quantLeftChannel);
+	 UARTData[leftCount] = MAX * quantLeftChannel;
 	 // reset leftCount to zero if it reaches 512*/
 	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 }
