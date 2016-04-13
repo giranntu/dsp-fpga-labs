@@ -166,18 +166,9 @@ int main(void) {
 	 aic23_demo[8] = sampleFrequency;
 	 aic23_demo[4] = 0x0014;
 	 AIC23_demo();
-	 int i;
 
 	 /*Your main infinity while loop*/
-	 while(1){
-		 /*if (uartStartSendFlag) {
-			 // send 512 data to matlab
-			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				 uart_sendFloat(UARTData[i]);
-			 }
-			 uartStartSendFlag = 0;
-		 }*/
-	 }
+	 while(1);
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
