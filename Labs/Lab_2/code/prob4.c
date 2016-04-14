@@ -14,6 +14,16 @@ float a[L] = {-2.439, 2.122, -0.6488};
 float x[M];
 float y[L];
 
+// Shift the buffer's elements such that the last element gets removed.
+// Then put the given input (current sample) at index 0
+void shiftInsert(float input, float buffer[], short length) {
+	short i;
+	for (i = length - 1; i > 0; i--) {
+		buffer[i] = buffer[i - 1]; 
+	}
+	buffer[0] = input;	
+}
+
 // Order of computation in IIR filter 
 // 1. store input data
 // 2. update x buffer 
@@ -21,9 +31,13 @@ float y[L];
 // 4. update y buffer 
 // 5. output y_n
 static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
-	float input = (float) IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
+	volatile int* leftreadyptr = (volatile int *)context;
+	*leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
+
+	/******* Apply Filter *******/
+	float input = (float) unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
 	
-	// shift data and put the current sample at index 0
 	shiftInsert(input, x, M);
 
 	// yn = - (sum from i = 1 to L - 1(a_i * y(n - i)))
@@ -33,14 +47,6 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	shiftInsert(yn, y, L);
 	//scale output (shift right 15 bits)
 	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, yn >> 15);
-}
-
-void shiftInsert(float input, float buffer[], short length) {
-	short i;
-	for (i = length - 1; i > 0; i--) {
-		buffer[i] = buffer[i - 1]; 
-	}
-	buffer[0] = input;	
 }
 
 // -------------------------------------------------------------------
@@ -64,28 +70,6 @@ float y[L];
 short x_i = 0; // current x index
 short y_i = 0; // current y index
 
-// Order of computation in IIR filter 
-// 1. store input data
-// 2. update x buffer 
-// 3. compute y_n 
-// 4. update y buffer 
-// 5. output y_n
-static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
-	float input = (float) IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	
-	// shift data and put the current sample at index 0
-	circularInsertX(input);
-
-	// yn = - (sum from i = 1 to L - 1(a_i * y(n - i)))
-	//      + (sum from i = 1 to M - 1(b_i * x(n - i)))
-	// x_i and y_i here are pointing at the least recently put input
-	float yn = circularSoP(x, b, M, x_i) - circularSoP(y, a, L, y_i);
-
-	circularInsertY(yn);
-	//scale output (shift right 15 bits)
-	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, yn >> 15);
-}
-
 static void updateX() {
 	x_i = (x_i + 1) % M;
 }
@@ -102,6 +86,33 @@ static void circularInsertX(int input) {
 static void circularInsertY(int input) {
 	y[y_i] = input;
 	updateY();
+}
+
+// Order of computation in IIR filter 
+// 1. store input data
+// 2. update x buffer 
+// 3. compute y_n 
+// 4. update y buffer 
+// 5. output y_n
+static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
+	volatile int* leftreadyptr = (volatile int *)context;
+	*leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
+	
+	/******* Apply Filter *******/
+	float input = (float) IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
+	
+	// shift data and put the current sample at index 0
+	circularInsertX(input);
+
+	// yn = - (sum from i = 1 to L - 1(a_i * y(n - i)))
+	//      + (sum from i = 1 to M - 1(b_i * x(n - i)))
+	// x_i and y_i here are pointing at the least recently put input
+	float yn = circularSoP(x, b, M, x_i) - circularSoP(y, a, L, y_i);
+
+	circularInsertY(yn);
+	//scale output (shift right 15 bits)
+	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, yn >> 15);
 }
 
 // NOTE: need circularSoP(x1, x2, size, start);
