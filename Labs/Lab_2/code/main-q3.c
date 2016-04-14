@@ -190,11 +190,7 @@ int main(void) {
 	 int i;
 	 while (1) {
 		 if(uartStartSendFlag){
-			// flipped data
-			for (i = 0; i < UART_BUFFER_SIZE; i++){
-				uart_sendInt16(UARTFlipped[i]);
-			}
-			// original data without flipping operation
+			// [original, flipped] data
 			for (i = 0; i < UART_BUFFER_SIZE; i++){
 				uart_sendInt16(datatest[i]);
 			}

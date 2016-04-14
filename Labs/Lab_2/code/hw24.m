@@ -27,19 +27,3 @@ xlabel('Frequency (KHz)')
 title('FFT');	 	 
 xlabel('Frequency (Hz)')	 	 
 ylabel('Magnitude');
-
-%----- Input ---------
-% figure;
-% plot(input);
-% figure;
-% b = (abs(fft(input, N))/N);
-% range = linspace(-N/2, N/2, N);
-% 
-% plot(range, fftshift(b));
-% 'done'
-% 
-% xlim([-5000 5000])
-% xlabel('Frequency (KHz)')	 
-% title('FFT');	 	 
-% xlabel('Frequency (Hz)')	 	 
-% ylabel('Magnitude');
