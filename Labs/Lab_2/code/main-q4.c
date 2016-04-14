@@ -164,19 +164,22 @@ int main(void) {
 	 //sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
-	 aic23_demo[4] = 0x0014;
+//	 aic23_demo[4] = 0x0014;
 	 AIC23_demo();
-
+	 int i = 0;
 	 /*Your main infinity while loop*/
 	 while(1) {
 		 if (uartStartSendFlag) {
 			 // send 512 data to matlab
 			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				 uart_sendFloat(UARTOutput[i]);
+				 //uart_sendInt16(UARTOutput[i]);
+				 //printf("%d,",UARTOutput[i]);
+				 uart_sendInt16(UARTInput[i]);
 			 }
-			 for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				 uart_sendFloat(UARTInput[i]);
-			 }
+			 /*for (i = 0; i < UART_BUFFER_SIZE; i++) {
+				 uart_sendInt16(UARTInput[i]);
+			 }*/
+			 printf("sending to matlab\n");
 			 uartStartSendFlag = 0;
 		 }
 	 }
