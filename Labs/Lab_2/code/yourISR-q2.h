@@ -1,4 +1,4 @@
-/* HW2 QUESTION 3
+/* HW2 QUESTION 2
  * Jake and Jisoo
  */
 
@@ -17,21 +17,7 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
-
-// -------- Problem 3 Global variables --------
-#define BUFFER_SIZE 256
-#define FRAME_SIZE 128
-#define UART_BUFFER_SIZE (3 * FRAME_SIZE)
-
-int data1[FRAME_SIZE];
-int data2[FRAME_SIZE];
-int flip_data[FRAME_SIZE];
-
-int UARTFlipped[UART_BUFFER_SIZE];
-int uartIndex = 0;
-
-void flip(int src[], int dst[], int N);
-// --------------------------------------------
+#define UART_BUFFER_SIZE 512
 
 //Value for interrupt ID
 extern alt_u32 switch0_id;
@@ -94,6 +80,34 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
+// ------------------------------------------
+#define MAX_DELAY 1000
+#define MIN_DELAY 0
+#define BUFFER_LENGTH 5000
+int sw0State = 0;
+float gain = 0.6;
+int sampleDelay = 0;
+short delayInc = 50;
+alt_16 delayedBuffer[BUFFER_LENGTH];
+
+// either -1 or 1
+void changeDelay(short sign) {
+	sampleDelay = sampleDelay + sign * delayInc;
+	if (sampleDelay < MIN_DELAY) {
+		sampleDelay = MIN_DELAY;
+	} else if (sampleDelay > MAX_DELAY) {
+		sampleDelay = MAX_DELAY;
+	}
+	printf("sampleDelay = %d\n", sampleDelay);
+}
+
+static int getEchoSample(int index) {
+	if (index == 0) {
+		return 0;
+	}
+	return gain * delayedBuffer[(BUFFER_LENGTH + leftCount - index) % BUFFER_LENGTH];
+}
+
 // ----------- switch handlers --------------
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
@@ -103,6 +117,7 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
 	 /*Perform Jobs*/
+	 sw0State = IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
 }
 
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
@@ -151,6 +166,7 @@ static void handle_key1_interrupt(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY1_BASE, 0);
 
 	 setFreqFlag = 1;
+	 changeDelay(1);
 }
 
 // decrement the delay
@@ -160,6 +176,7 @@ static void handle_key2_interrupt(void* context, alt_u32 id) {
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE, 0);
+	 changeDelay(-1);
 }
 
 static void handle_key3_interrupt(void* context, alt_u32 id) {
@@ -196,30 +213,19 @@ alt_16 signed2unsigned(int sign){
 }
 
 static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
-	volatile int* leftreadyptr = (volatile int *)context;
-	*leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
-	/*******Read, playback, store data*******/
-	leftChannel = unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
-	if(leftCount < FRAME_SIZE){
-		data1[leftCount] = leftChannel;
-		if(leftCount == 0) {
-			flip(data2, flip_data, FRAME_SIZE);
-		}
-	} else {
-		data2[leftCount % FRAME_SIZE] = leftChannel;
-		if(leftCount == FRAME_SIZE) {
-			flip(data1, flip_data, FRAME_SIZE);
-		}
-	}
-	// flipped  321 321 321
-	// original 123 123 123
-	int flipIndex = leftCount % FRAME_SIZE;
-	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, flip_data[flipIndex]);
-	UARTFlipped[uartIndex] = flip_data[flipIndex];
-	datatest[uartIndex] = flip_data[FRAME_SIZE - 1 - flipIndex];
-	uartIndex = (uartIndex+1) % UART_BUFFER_SIZE;
-	leftCount = (leftCount+1) % BUFFER_SIZE;
+	 volatile int* leftreadyptr = (volatile int *)context;
+	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
+	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
+	 /*******Read, playback, store data*******/
+	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
+
+	 // calculate current sample
+	 // put it into buffer
+	 int x_t = sw0State * getEchoSample(sampleDelay) + leftChannel;
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, x_t);
+	 delayedBuffer[leftCount] = x_t;
+	 // reset leftCount to zero if it reaches 512*/
+	 leftCount = (leftCount + 1) % BUFFER_LENGTH;
 }
 
 

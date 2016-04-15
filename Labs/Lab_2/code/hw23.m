@@ -11,8 +11,8 @@ buffersize = 128*6; % set the size of instant read of buffer
 x = fread(s,buffersize,'int16'); % read the buffer when data arrive
 %%
 close all;
-flipped = x(1:128*3);
-original = x(128*3+1:end);
+original = x(1:128*3);
+flipped = x(128*3+1:end);
 % figure;
 % plot(flipped);
 % figure

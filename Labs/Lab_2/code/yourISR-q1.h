@@ -1,4 +1,4 @@
-/* HW2 QUESTION 4
+/* HW2 QUESTION 1
  * Jake and Jisoo
  */
 
@@ -17,7 +17,7 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
-#define UART_BUFFER_SIZE 256
+#define UART_BUFFER_SIZE 512
 
 //Value for interrupt ID
 extern alt_u32 switch0_id;
@@ -80,36 +80,67 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
-// -------------------------------------------------------------------
-// Solution 1: This approach doesn't involve circular buffer. Instead, 
-// older values in the buffer gets shifted whenever new input comes in. 
-// The provided SoP function can be used but it's less efficient than
-// the solution that uses circular buffer.
+// ------ MAX and MIN -------
+#define MAX 9000
+#define MIN -1000
 
-float UARTInput[UART_BUFFER_SIZE];
-float UARTOutput[UART_BUFFER_SIZE];
+// ------ Quantization Table -------
+int quantTable3[2] = {
+	(2*MAX+6*MIN)/8,
+	(6*MAX+2*MIN)/8,
+};
 
-#define M 4
-#define L 3
-// b_m = [1 3 3 1] * (4.29 * 10^-3) = [0.0043 0.0129 0.0129 0.0043]
-// a_l = [-2.439 2.122 -0.6488] 
-float b[M] = {0.0043, 0.0129, 0.0129, 0.0043};
-float a[L] = {-2.439, 2.122, -0.6488};
+int quantTable5[4] = {
+	(MAX+7*MIN)/8,
+	(3*MAX+5*MIN)/8,
+	(5*MAX+3*MIN)/8,
+	(7*MAX+MIN)/8,
+};
 
-float x[M];
-float y[L];
+int quantTable7[6] = {
+	(MAX+7*MIN)/8,
+	(2*MAX+6*MIN)/8,
+	(3*MAX+5*MIN)/8,
+	(5*MAX+3*MIN)/8,
+	(6*MAX+2*MIN)/8,
+	(7*MAX+MIN)/8,
+};
 
-// Shift the buffer's elements such that the last element gets removed.
-// Then put the given input (current sample) at index 0
-void shiftInsert(float input, float buffer[], short length) {
-	short i;
-	for (i = length - 1; i > 0; i--) {
-		buffer[i] = buffer[i - 1]; 
+// ------ Level-n Table -------
+float levelTable3[3] = {-1, 0, 1};
+float levelTable5[5] = {-1, -0.5, 0, 0.5, 1};
+float levelTable7[7] = {-1, -0.75, -0.5, 0, 0.5, 0.75, 1};
+// ------ Current Level -------
+short level = 3;
+// ------ UART data -----------
+float UARTData[UART_BUFFER_SIZE];
+
+// ---------------------------------
+static double getQuantizedValue(int input) {
+/*	if (input < 0) {
+		input *= -1;
+	}*/
+	float* quantTable;
+	float* levelTable;
+	if (level == 7) {
+		quantTable = quantTable7;
+		levelTable = levelTable7;
+	} else if (level == 5) {
+		quantTable = quantTable5;
+		levelTable = levelTable5;
+	} else { // level == 3
+		quantTable = quantTable3;
+		levelTable = levelTable3;
 	}
-	buffer[0] = input;	
-}
-// -------------------------------------------------------------------
 
+	int i = 0;
+	while (input > quantTable[i]) {
+		i++;
+	}
+	// length of levelTable_n is one more than quantTable's length
+	// which will point to correct index at the levelTable
+	return levelTable[i];
+}
 
 // ----------- switch handlers --------------
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
@@ -159,7 +190,6 @@ static void handle_key0_interrupt(void* context, alt_u32 id) {
 /* Enable the flag to update the
  * ADC sampling frequency on AIC23.
  */
-// increment the delay
 static void handle_key1_interrupt(void* context, alt_u32 id) {
 	 volatile int* key1ptr = (volatile int *)context;
 	 *key1ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEY0_BASE);
@@ -167,16 +197,20 @@ static void handle_key1_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY1_BASE, 0);
 
+	 //IOWR_ALTERA_AVALON_PIO_IRQ_MASK(SWITCH1_BASE, 0x01);
 	 setFreqFlag = 1;
+	 level = 3;
+	 printf("level = 3\n");
 }
 
-// decrement the delay
 static void handle_key2_interrupt(void* context, alt_u32 id) {
 	 volatile int* key2ptr = (volatile int *)context;
 	 *key2ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE);
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY2_BASE, 0);
+	 level = 5;
+	 printf("level = 5\n");
 }
 
 static void handle_key3_interrupt(void* context, alt_u32 id) {
@@ -185,6 +219,9 @@ static void handle_key3_interrupt(void* context, alt_u32 id) {
 
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEY3_BASE, 0);
+
+	 level = 7;
+	 printf("level = 7\n");
 }
 
 /*  Detect left channel ready interrupt and do:
@@ -193,6 +230,7 @@ static void handle_key3_interrupt(void* context, alt_u32 id) {
  *  instantly play back.
  *
  */
+
 int unsigned2signed(alt_16 unsign){
 	int result;
 	if(unsign>32767)
@@ -211,35 +249,23 @@ alt_16 signed2unsigned(int sign){
 	return result;
 }
 
-// Order of computation in IIR filter 
-// 1. store input data
-// 2. update x buffer 
-// 3. compute y_n 
-// 4. update y buffer 
-// 5. output y_n
 static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
-	volatile int* leftreadyptr = (volatile int *)context;
-	*leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
+	 volatile int* leftreadyptr = (volatile int *)context;
+	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
+	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
+	 /*******Read, playback, store data*******/
+	 leftChannel = unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
+	 if (leftCount == 0) {
+		 printf("leftChannel = %d\n", leftChannel);
+	 }
+	 double quantLeftChannel = getQuantizedValue(leftChannel);
 
-	/******* Apply Filter *******/
-	float input = (float) unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
-	
-	shiftInsert(input, x, M);
-
-	// yn = - (sum from i = 1 to L - 1(a_i * y(n - i)))
-	//      + (sum from i = 1 to M - 1(b_i * x(n - i)))
-	float yn = SoP(x, b, M) - SoP(y, a, L);
-
-	shiftInsert(yn, y, L);
-	//scale output (shift right 15 bits)
-	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, yn >> 15);
-
-	// store data to be sent to Matlab
-	UARTOutput[leftCount] = yn;
-	UARTInput[leftCount] = input;
-	leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, MAX * quantLeftChannel);
+	 UARTData[leftCount] = MAX * quantLeftChannel;
+	 // reset leftCount to zero if it reaches 512*/
+	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 }
+
 
 /*  Detect right channel ready interrupt and do:
  *  Collect data,
