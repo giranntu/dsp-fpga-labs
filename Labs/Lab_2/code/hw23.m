@@ -2,7 +2,7 @@
 % Jake and Jisoo
 
 close all; clc; clear all;
-
+load good_x
 %% Read UART
 s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
 set(s,'InputBufferSize',20000); % set the size of input buffer
@@ -13,10 +13,14 @@ x = fread(s,buffersize,'int16'); % read the buffer when data arrive
 close all;
 original = x(1:128*3);
 flipped = x(128*3+1:end);
-% figure;
-% plot(flipped);
-% figure
-% plot(original);
+figure;
+plot(flipped);
+title('Processed (3 chunks)')
+xlabel('Sample'); ylabel('Amplitude');
+figure
+plot(original);
+title('Original Unprocessed')
+xlabel('Sample'); ylabel('Amplitude');
 % 
 % flipped_frame1 = flipud(flipped(1:128));
 % flipped_frame2 = flipud(flipped(128+1:2*128));
@@ -25,4 +29,4 @@ flipped = x(128*3+1:end);
 % original_from_flipped = [flipped_frame1; flipped_frame2; flipped_frame3];
 % figure;
 % plot(original_from_flipped);
-% original - original_from_flipped
+% % original - original_from_flipped
