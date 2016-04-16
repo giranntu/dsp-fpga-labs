@@ -24,7 +24,7 @@
 
 convolve:
 	add r2, r0, r0		# sum = 0
-	stw r6, r8        # counter = N, decr by 1
+	stw r6, r8 			# counter = N, decr by 1
 
 	muli r6, r6, 4		# N *= 4
 	add  r5, r5, r6 	# h += N. h points one word past the last element 
@@ -45,11 +45,14 @@ convolve:
 		subi r5, r5, 4			# h--
 		subi r8, r8, 1			# counter--
 		bge  r4, r9, MOD		# if (x >= counter)
-		CONDITION:
-			bgt  r8, r0, LOOP		# if (counter > 0) { LOOP } else { DONE }
-	ret 
+		jmp CONDITION
+		
+	CONDITION:
+		bgt  r8, r0, LOOP		# if (counter > 0) { LOOP } else { DONE }
 		
 	MOD:
 		sub r4, r4, r6
 		jmp CONDITION
-	
+		
+	END:
+		ret 
