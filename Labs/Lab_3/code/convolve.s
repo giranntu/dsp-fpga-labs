@@ -24,7 +24,7 @@
 
 convolve:
 	add r2, r0, r0		# sum = 0
-	stw r8, r6 			# counter = N, decr by 1
+	stw r6, r8        # counter = N, decr by 1
 
 	muli r6, r6, 4		# N *= 4
 	add  r5, r5, r6 	# h += N. h points one word past the last element 
