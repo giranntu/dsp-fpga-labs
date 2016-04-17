@@ -16,7 +16,7 @@
 
 #endif /* YOURISR_H_ */
 #include "system_init.h"
-
+#include "fdacoefs.h"
 // -------------------------------------------------
 #define N 5
 int convIndex = 0;
@@ -185,7 +185,7 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 datatest[leftCount] = leftChannel;
 	 leftCount = (leftCount + 1) % N;
 
-	 //convBuffer[convIndex] = convolve(datatest, h, N, leftCount);
+	 convBuffer[convIndex] = convolve(datatest, h_FIR, N, leftCount);
 	 convIndex = (convIndex + 1) % N;
 //	 /****************************************/
 }
