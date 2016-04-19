@@ -8,11 +8,18 @@
 struct sigaction sa;
 struct itimerval timer;
 
-int y_2 = -2; // y(-2); -sin(2wT) initially 
-int y_1 = -1; // y(-1); -sin(wT) initially
-int currentCoeff = 5; // reset every 1 second 
-int coeff_1_2k = 5; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
-int coeff_2_4k = 5; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
+// TODO: maybe multiply these values by 1000 like in lab 2 to use it as ints
+int y_2_1200 = -0.4540; // y(-2) for 1.2 kHz; -sin(2wT) initially 
+int y_1_1200 = -0.2334; // y(-1) for 1.2 kHz; -sin(wT) initially
+int y_2_2400 = -0.4540; // y(-2) for 2.4 kHz; -sin(2wT) initially 
+int y_1_2400 = -0.8090; // y(-1) for 2.4 kHz; -sin(wT) initially
+int coeff_1_2k = 1.9447; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
+int coeff_2_4k = 1.7820; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
+
+// just set it to 1.2 kHz data for now
+int current_y_2 = y_2_1200;
+int current_y_1 = y_1_1200;
+int currentCoeff = coeff_1_2k; // reset every 1 second 
 // y(-2) = -sin(2wT)
 // y(-1) = -sin(wT)
 // y(n)  = A y(n - 1) - y(n - 2)
@@ -26,11 +33,14 @@ void handler(int whatever);
 void leftready();
 
 void leftready() {
-  // compute y(n)
-  // y_2 = y_1;
-  // y_1 = y(n);
-  // output y(n)
-  printf("left out = %d\n", currentCoeff);
+  // 1. compute y(n)
+  // 2. y_2 = y_1;
+  // 3. y_1 = y(n);
+  // 4. output y(n)
+  int y_n = currentCoeff * current_y_1 - current_y_2;
+  current_y_2 = current_y_1;
+  current_y_1 = y_n;
+  printf("left out = %d\n", y_n);
 }
 
 
@@ -46,11 +56,15 @@ void handler(int whatever) {
   int r = rand() % 100;
   printf("r = %d\n", r);
   if (r < 50) {
-    printf("playing 2.4 kHz sinusoid\n");
-    freq = 2400;
-  } else {
     printf("playing 1.2 kHz sinusoid\n");
-    freq = 1200;
+    current_y_2 = y_2_1200;
+    current_y_1 = y_1_1200;
+    currentCoeff = coeff_1_2k; // reset every 1 second 
+  } else {
+    printf("playing 2.4 kHz sinusoid\n");
+    current_y_2 = y_2_2400;
+    current_y_1 = y_1_2400;
+    currentCoeff = coeff_2_4k; // reset every 1 second 
   }
 }
 
