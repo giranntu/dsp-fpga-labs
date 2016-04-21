@@ -238,7 +238,7 @@ altera_avalon_uart_read(altera_avalon_uart_state* sp, char* ptr, int len,
 
   /* Return the number of bytes read */
   if(read_would_block) {
-    return ~EWOULDBLOCK;
+    return -EWOULDBLOCK;
   }
   else {
     return count;

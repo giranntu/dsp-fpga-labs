@@ -74,8 +74,6 @@ extern int setFreqFlag;
 /*uart object*/
 extern int uart;
 
-//RIGHT CHANNEL SWITCH
-int left_on = 1;
 static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch0ptr = (volatile int *)context;
 	 *switch0ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE);
@@ -83,13 +81,11 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH0_BASE, 0);
 
-	 // Set mute state
-	 left_on = IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE);
-	 printf("Right : %d\n", left_on);
+	 /*Perform Jobs*/
+
+
 }
 
-//LEFT CHANNEL SWITCH
-int right_on = 1;
 static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 volatile int* switch1ptr = (volatile int *)context;
 	 *switch1ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE);
@@ -97,10 +93,7 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 /* Write to the edge capture register to reset it. */
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(SWITCH1_BASE, 0);
 
-	 // Set mute state
-	 right_on = IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE);
-	 printf("Left : %d\n", right_on);
-
+	 /*Perform Jobs*/
 }
 
 /* Enable the flag to send recent
@@ -182,13 +175,8 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, left_on*leftChannel);
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 	 datatest[leftCount] = leftChannel;
-	 if (left_on) {
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) | 0x01); // LED ON
-	 } else {
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) & ~0x01); // LED OFF
-	 }
 	 leftCount = (leftCount+1)%256;
 //	 /****************************************/
 
@@ -206,13 +194,8 @@ static void handle_rightready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(RIGHTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 rightChannel = IORD_ALTERA_AVALON_PIO_DATA(RIGHTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(RIGHTSENDDATA_BASE, right_on*rightChannel);
+	 IOWR_ALTERA_AVALON_PIO_DATA(RIGHTSENDDATA_BASE, rightChannel);
 	 rightChannelData[rightCount] = rightChannel;
-	 if (right_on) {
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) | 0x02); // LED ON
-	 } else {
-		 IOWR_ALTERA_AVALON_PIO_DATA(LED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LED_BASE) & ~0x02); // LED OFF
-	 }
 	 rightCount = (rightCount+1) % BUFFERSIZE;
 	 /****************************************/
 }
