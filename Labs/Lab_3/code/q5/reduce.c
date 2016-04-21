@@ -284,16 +284,23 @@ void bit_reduce(char* rgb, int length, int old, int new) {
 }
  
 
-int main(){
+int main(int args, char * argv[]){
+	int length = SIZE * BYTES_PER_PIXEL;
+	int new_levels = 32;   // 5 bits
+	int old_levels = 256;  // 8 bits
+
+	/* process input arg */	
+	if (args > 1) {
+		sscanf(argv[1], "%d", &new_levels);  // convert to int
+		printf("Input arg: %d levels \n", new_levels);
+	}
 	camera_t* camera = camera_open("/dev/video0", WIDTH, HEIGHT);
 	camera_init(camera);
 	camera_start(camera);
 	struct timeval timeout;
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
-	int length = SIZE * BYTES_PER_PIXEL;
-	int old_levels = 256;  // 8 bits
-	int new_levels = 32;   // 5 bits
+
 
 	/* skip 5 frames for booting a cam */
 	int i;
