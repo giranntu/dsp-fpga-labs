@@ -66,7 +66,7 @@ int convResultBuffer[CONVBUFFSIZE];
  *
  * rx_buffer-> A ring buffer to collect uart data sent by host computer
  * */
-alt_16 datatest[N];
+alt_16 datatest[B_LEN];
 unsigned short RxHead=0;
 unsigned char rx_buffer[RX_BUFFER_SIZE];
 
@@ -149,6 +149,12 @@ void system_initialization(){
 	 IOWR_ALTERA_AVALON_PIO_DATA(SCLK_BASE, 0); // Initialize SCLK to high
 }
 
+void initFilterCoeff() {
+	int i;
+	for (i = 0; i < B_LEN; i++) {
+		h[i] = (int) (B[i] * 10000);
+	}
+}
 
 int main(void) {
 	 system_initialization();
@@ -159,22 +165,28 @@ int main(void) {
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
+
+	 initFilterCoeff();
+	 int i;
 	 /*Your main infinity while loop*/
-	 /*while(1){
+	 while(1){
 		 if(uartStartSendFlag){
 			printf("hello\n");
+			for (i = 0; i < UART_BUFFER_SIZE; i++) {
+				uart_sendInt16(convBuffer[i]);
+			}
 			uartStartSendFlag = 0;
 		 }
-	 }*/
-	 printf("hello\n");
+	 }
+	 /*printf("hello\n");
 	 int index = 0;
-	 int x[] = {1,2,3,4,5};
-	 int h[] = {1,3,5,7,9};
+	 float x[] = {1,2,3,4,5,6,7,8,9,10,
+	 11,12,13,14,15,16,17,18,19,20};
 
 	 for (index = 0; index < N; index++) {
-		 int result = convolve(x,h,N,index);
-		 printf("i = %d, convResult = %d\n", index, result);
-	 }
+		 float result = convolve(x,B,N,index);
+		 printf("i = %d, convResult = %f\n", index, result);
+	 }*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/

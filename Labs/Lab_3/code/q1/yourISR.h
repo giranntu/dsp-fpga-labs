@@ -18,10 +18,9 @@
 #include "system_init.h"
 #include "fdacoefs.h"
 // -------------------------------------------------
-#define N 5
+#define UART_BUFFER_SIZE 256
 int convIndex = 0;
-int convBuffer[N];
-
+int convBuffer[UART_BUFFER_SIZE];
 // -------------------------------------------------
 
 
@@ -49,7 +48,7 @@ extern int sampleFrequency;
 extern alt_16 leftChannelData[BUFFERSIZE];
 extern alt_16 rightChannelData[BUFFERSIZE];
 extern int convResultBuffer[CONVBUFFSIZE];
-extern alt_16 datatest[N];
+extern alt_16 datatest[B_LEN];
 /*uart-global
  * RxHead: integer indicator tells you the index of where the
  * newest char data you received from host computer
@@ -180,13 +179,14 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, leftChannel);
 
 	 datatest[leftCount] = leftChannel;
-	 leftCount = (leftCount + 1) % N;
+	 leftCount = (leftCount + 1) % B_LEN;
 
-	 convBuffer[convIndex] = convolve(datatest, h_FIR, N, leftCount);
-	 convIndex = (convIndex + 1) % N;
+	 convBuffer[convIndex] = convolve(datatest, h, B_LEN, leftCount);
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, convBuffer[convIndex] / 10000);
+
+	 convIndex = (convIndex + 1) % UART_BUFFER_SIZE;
 //	 /****************************************/
 }
 
