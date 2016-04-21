@@ -1,4 +1,4 @@
-/* HW3 QUESTION 1
+/* HW3 QUESTION 3
  * Jake and Jisoo
  */
 
@@ -154,20 +154,14 @@ void system_initialization(){
 int main(void) {
 	 system_initialization();
      // set frequency
-	 sampleFrequency = 0x000C; //8k
-	 //sampleFrequency = 0x0019; //32k
+	 //sampleFrequency = 0x000C; //8k
+	 sampleFrequency = 0x0019; //32k
 	 //sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
-	 timer_Init();
 	 /*Your main infinity while loop*/
-	 while(1){
-		 if(uartStartSendFlag){
-			printf("hello\n");
-			uartStartSendFlag = 0;
-		 }
-	 }
+	 while(1);
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/

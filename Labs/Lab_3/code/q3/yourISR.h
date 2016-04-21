@@ -1,4 +1,4 @@
-/* HW3 QUESTION 1
+/* HW3 QUESTION 3
  * Jake and Jisoo
  */
 
@@ -17,44 +17,47 @@
 #endif /* YOURISR_H_ */
 #include "system_init.h"
 
-// ------------------------------------------------------------
-#include "iir_generator.h"
+// ---------------------------------------------------------------
 
-// reset every 1 second
-static void handler(int whatever) {
-  int r = rand() % 100;
-  printf("r = %d\n", r);
-  if (r < 50) {
-    printf("playing 1.2 kHz sinusoid\n");
-    current_y_2 = y_2_1200;
-    current_y_1 = y_1_1200;
-    A = A_1200;
-  } else {
-    printf("playing 2.4 kHz sinusoid\n");
-    current_y_2 = y_2_2400;
-    current_y_1 = y_1_2400;
-    A = A_2400; // reset every 1 second
-  }
+// y(-2) = -sin(2wT)
+// y(-1) = -sin(wT)
+// y(n)  = A y(n - 1) - y(n - 2)
+//       = 2cos(wT) y(n - 1) - y(n - 2)
+// w = 2pi f
+// T = 1 / Fs
+
+float y_2_1200 = -0.4540; // y(-2) for 1.2 kHz; -sin(2wT) initially
+float y_1_1200 = -0.2334; // y(-1) for 1.2 kHz; -sin(wT) initially
+float A_1200 = 1.9447; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
+
+float y_2_2400 = -0.4540; // y(-2) for 2.4 kHz; -sin(2wT) initially
+float y_1_2400 = -0.8090; // y(-1) for 2.4 kHz; -sin(wT) initially
+float A_2400 = 1.7820; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
+
+// just set it to 1.2 kHz data for now
+float current_y_2 = 0;
+float current_y_1 = 0;
+float A = 0; // reset every 1 second
+
+float y_n = 0;
+int Fs = 32000;
+
+void chooseRandom() {
+	int r = rand() % 100;
+	printf("r = %d\n", r);
+	if (r < 50) {
+		printf("playing 1.2 kHz sinusoid\n");
+		current_y_2 = y_2_1200;
+		current_y_1 = y_1_1200;
+		A = A_1200;
+	} else {
+		printf("playing 2.4 kHz sinusoid\n");
+		current_y_2 = y_2_2400;
+		current_y_1 = y_1_2400;
+		A = A_2400; // reset every 1 second
+	}
 }
-
-static void timer_Init() {
-  memset (&sa, 0, sizeof (sa));  // set null character to first sizeof(sa) buffers in sa
-  sa.sa_handler = &handler;
-  sigaction(SIGVTALRM, &sa, NULL);
-
-  /* Configure the timer to expire after 2 sec... */
-  //timer.it_value.tv_sec = 0;
-  timer.it_value.tv_usec = 1; // micro second
-  /* ... and every 333 msec after that. */
-  timer.it_interval.tv_sec = 1; // every 1 second
-  //timer.it_interval.tv_usec = 0;
-  /* Start a virtual timer. It counts down whenever this process is
-  *      executing. */
-  setitimer(ITIMER_VIRTUAL, &timer, NULL);
-}
-
-// ------------------------------------------------------------
-
+// ---------------------------------------------------------------
 
 //Value for interrupt ID
 extern alt_u32 switch0_id;
@@ -210,6 +213,10 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
+	 // when to know 1 second has passed
+	 if (leftCount % Fs == 0) {
+		 chooseRandom();
+	 }
 	 // 1. compute y(n)
 	 // 2. y_2 = y_1;
 	 // 3. y_1 = y(n);
@@ -217,7 +224,8 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 y_n = A * current_y_1 - current_y_2;
 	 current_y_2 = current_y_1;
 	 current_y_1 = y_n;
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, y_n);
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, (y_n * 10000));
+	 leftCount++;
 }
 
 
