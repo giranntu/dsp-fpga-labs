@@ -78,7 +78,8 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in radiobutton1.
 function radiobutton1_Callback(hObject, eventdata, handles)
-s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
+s = serial('COM6', 'BaudRate',115200);
+fopen(s);
 fwrite(s, '1');
 fclose(s);
 delete(s);
@@ -88,7 +89,8 @@ operation = 'lowpass filter enabled'
 
 % --- Executes on button press in radiobutton3.
 function radiobutton3_Callback(hObject, eventdata, handles)
-s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
+s = serial('COM6', 'BaudRate',115200);
+fopen(s);
 fwrite(s, '2');
 fclose(s);
 delete(s);
@@ -97,7 +99,8 @@ operation = 'lowpass filter disabled'
 
 % --- Executes on button press in radiobutton4.
 function radiobutton4_Callback(hObject, eventdata, handles)
-s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
+s = serial('COM6', 'BaudRate',115200);
+fopen(s);
 fwrite(s, '3');
 fclose(s);
 delete(s);
@@ -106,7 +109,8 @@ operation = 'highpass filter enabled'
 
 % --- Executes on button press in radiobutton5.
 function radiobutton5_Callback(hObject, eventdata, handles)
-s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
+s = serial('COM6', 'BaudRate',115200); 
+fopen(s);
 fwrite(s, '4');
 fclose(s);
 delete(s);
