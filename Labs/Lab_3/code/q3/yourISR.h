@@ -30,8 +30,8 @@ float y_2_1200 = -0.4540; // y(-2) for 1.2 kHz; -sin(2wT) initially
 float y_1_1200 = -0.2334; // y(-1) for 1.2 kHz; -sin(wT) initially
 float A_1200 = 1.9447; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
 
-float y_2_2400 = -0.4540; // y(-2) for 2.4 kHz; -sin(2wT) initially
-float y_1_2400 = -0.8090; // y(-1) for 2.4 kHz; -sin(wT) initially
+float y_2_2400 = -0.8090; // y(-2) for 2.4 kHz; -sin(2wT) initially
+float y_1_2400 = -0.4540; // y(-1) for 2.4 kHz; -sin(wT) initially
 float A_2400 = 1.7820; // precomputed 2cos(wT) = 2cos(2*pi*f/Fs)
 
 // just set it to 1.2 kHz data for now
@@ -43,9 +43,9 @@ float y_n = 0;
 int Fs = 32000;
 
 void chooseRandom() {
-	int r = rand() % 100;
+	int r = rand() % 2;
 	printf("r = %d\n", r);
-	if (r < 50) {
+	if (r > 0) {
 		printf("playing 1.2 kHz sinusoid\n");
 		current_y_2 = y_2_1200;
 		current_y_1 = y_1_1200;

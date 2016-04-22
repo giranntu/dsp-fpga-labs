@@ -270,30 +270,39 @@ void print_img(char* rgb, int length) {
 	printf("\n");
 }
 
-void bit_reduce(char* rgb, int length, int old, int new) {
+void bit_reduce(uint8_t* rgb, int length, int old, int new) {
 	int x, new_x;  // pixel at index
     	int s = old/new;
 	for (int i = 0; i < length; i++) {
 		x = rgb[i];
 		new_x = (x/s)*s + s/2 ;
 		rgb[i] = new_x;	// overwrite with bit reduced
-		// printf ("%d -> %d\n", x, new_x);  // debug
+		if (i < 100) {
+			printf ("%d -> %d\n", x, new_x);  // debug
+		}
 	}
 	printf ("Proof : %d -> %d\n", x, new_x);  // debug
 	printf("Old color levels  : %d\t New color levels :  %d\n", old, new);
 }
  
 
-int main(){
+int main(int args, char * argv[]){
+	int length = SIZE * BYTES_PER_PIXEL;
+	int new_levels = 32;   // 5 bits
+	int old_levels = 256;  // 8 bits
+
+	/* process input arg */	
+	if (args > 1) {
+		sscanf(argv[1], "%d", &new_levels);  // convert to int
+		printf("Input arg: %d levels \n", new_levels);
+	}
 	camera_t* camera = camera_open("/dev/video0", WIDTH, HEIGHT);
 	camera_init(camera);
 	camera_start(camera);
 	struct timeval timeout;
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
-	int length = SIZE * BYTES_PER_PIXEL;
-	int old_levels = 256;  // 8 bits
-	int new_levels = 32;   // 5 bits
+
 
 	/* skip 5 frames for booting a cam */
 	int i;
@@ -311,9 +320,9 @@ int main(){
 	// operates on rgb array in place
 	bit_reduce(rgb, length, old_levels, new_levels);
 	
-	/* debug print
+	/* debug print 
 	print_img(rgb, length);
-	printf("USB Cam Properties : Height %d\tWidth %d\n", camera->width, camera->height); */
+	printf("USB Cam Properties : Height %d\tWidth %d\n", camera->width, camera->height);*/
 	
 	/* save quantzed result */
 	FILE* reduced = fopen("reduced_result.jpg", "w");

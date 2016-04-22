@@ -150,16 +150,29 @@ void system_initialization(){
 int main(void) {
 	 system_initialization();
      // set frequency
-	 //sampleFrequency = 0x000C; //8k
+	 sampleFrequency = 0x000C; //8k
 	 //sampleFrequency = 0x0019; //32k
-	 sampleFrequency = 0x0023; //44.1k
+	 //sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
 
+	 int counter;
+	 int UARTData[128];
+	 int ii;
+	 for(ii=0; ii<128; ii++){
+		 UARTData[ii] = (int)1000*sin(2*PI*ii/128);
+	 }
 
 	 /*Your main infinity while loop*/
-	 while(1);
+	 while(1){
+		 if(uartStartSendFlag){
+			for (counter=1; counter < 128; counter++){
+				uart_sendInt16(UARTData[counter]);
+			}
+			uartStartSendFlag = 0;
+		 }
+	 }
 
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
