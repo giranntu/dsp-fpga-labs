@@ -177,9 +177,9 @@ int main(void) {
 
 	 while(1){
 		 if(uartStartSendFlag){
-			printf("hello\n");
-			for (i = 0; i < UART_BUFFER_SIZE; i++) {
-				uart_sendInt16(convBuffer[i]);
+			printf("Sending data to Matlab\n");
+			for (i = 0; i < 2 * UART_BUFFER_SIZE; i++) {
+				uart_sendInt16(UARTData[i]);
 			}
 			uartStartSendFlag = 0;
 		 }

@@ -19,9 +19,12 @@
 #include "fdacoefs.h"
 // -------------------------------------------------
 #define UART_BUFFER_SIZE 256
-int convIndex = 0;
 int convBuffer[UART_BUFFER_SIZE];
+int UARTData[2 * UART_BUFFER_SIZE];
 int x[B_LEN];
+
+int convIndex = 0;
+int uartIndex = 0;
 // -------------------------------------------------
 
 
@@ -189,7 +192,9 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 if (convIndex % 256 == 0) {
 		 printf("Before\t%d\tAfter\t%d\n", leftChannel, convBuffer[convIndex]);
 	 }
-
+	 UARTData[uartIndex] = leftChannel;
+	 UARTData[uartIndex + UART_BUFFER_SIZE] = convBuffer[convIndex];
+	 uartIndex = (uartIndex + 1) % UART_BUFFER_SIZE;
 	 convIndex = (convIndex + 1) % UART_BUFFER_SIZE;
 //	 /****************************************/
 }
