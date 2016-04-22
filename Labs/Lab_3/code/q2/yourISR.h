@@ -238,6 +238,7 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 }
 
 	 UARTData[leftCount] = leftChannel;
+	 UARTData[leftCount + UART_BUFFER_SIZE] = result;
 	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 	 convIndex = (convIndex + 1) % UART_BUFFER_SIZE;
 //	 /****************************************/
