@@ -21,6 +21,7 @@
 #define UART_BUFFER_SIZE 256
 int convIndex = 0;
 int convBuffer[UART_BUFFER_SIZE];
+int x[B_LEN];
 // -------------------------------------------------
 
 
@@ -178,13 +179,16 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 *leftreadyptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE);
 	 IOWR_ALTERA_AVALON_PIO_EDGE_CAP(LEFTREADY_BASE, 0);
 	 /*******Read, playback, store data*******/
-	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
+	 leftChannel = unsigned2signed(IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE));
 
-	 datatest[leftCount] = leftChannel;
+	 x[leftCount] = leftChannel;
 	 leftCount = (leftCount + 1) % B_LEN;
 
-	 convBuffer[convIndex] = convolve(datatest, h, B_LEN, leftCount);
-	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, convBuffer[convIndex] / 10000);
+	 convBuffer[convIndex] = ((convolve(x, h, B_LEN, leftCount) / 10000));
+	 IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, convBuffer[convIndex]);
+	 if (convIndex % 256 == 0) {
+		 printf("Before\t%d\tAfter\t%d\n", leftChannel, convBuffer[convIndex]);
+	 }
 
 	 convIndex = (convIndex + 1) % UART_BUFFER_SIZE;
 //	 /****************************************/

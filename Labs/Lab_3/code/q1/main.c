@@ -149,12 +149,13 @@ void system_initialization(){
 	 IOWR_ALTERA_AVALON_PIO_DATA(SCLK_BASE, 0); // Initialize SCLK to high
 }
 
-void initFilterCoeff() {
+/*void initFilterCoeff() {
 	int i;
 	for (i = 0; i < B_LEN; i++) {
 		h[i] = (int) (B[i] * 10000);
+		printf("scaled coeff : %d\n", h[i]); // debug
 	}
-}
+}*/
 
 int main(void) {
 	 system_initialization();
@@ -164,11 +165,16 @@ int main(void) {
 	 //sampleFrequency = 0x0023; //44.1k
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
+	 //aic23_demo[4] = 0x0014;
 	 AIC23_demo();
 
-	 initFilterCoeff();
+
 	 int i;
+	 //initFilterCoeff();
+
+
 	 /*Your main infinity while loop*/
+
 	 while(1){
 		 if(uartStartSendFlag){
 			printf("hello\n");
@@ -178,15 +184,21 @@ int main(void) {
 			uartStartSendFlag = 0;
 		 }
 	 }
-	 /*printf("hello\n");
-	 int index = 0;
-	 float x[] = {1,2,3,4,5,6,7,8,9,10,
-	 11,12,13,14,15,16,17,18,19,20};
 
-	 for (index = 0; index < N; index++) {
-		 float result = convolve(x,B,N,index);
-		 printf("i = %d, convResult = %f\n", index, result);
-	 }*/
+//	 float x[] = {1,2,3,4,5,6};
+//	 float h[] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+// 	 int N = 5;
+// 	 int index = 0;
+// 	for (index = 0; index < B_LEN; index++) {
+// 		h[index] = (int)B[index];
+// 		printf("h[index] = %d\n", h[index]);
+// 	}
+// 	 for (index = 0; index < B_LEN; index++) {
+// 		 float result = convolve(x,h,B_LEN,index);
+// 		 printf("i = %d, convResult = %f\n", index, result);
+// 	 }
+
+
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	 /*!!!!!!!YOUR CODE SHOULD NEVER REACH HERE AND BELOW!!!!!!!*/
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
