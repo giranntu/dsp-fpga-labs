@@ -2,6 +2,7 @@
 
 #### Source
 It is all in the `reduce.c` source code
+`cd ~/q5/` for source
 
 #### To execute
 
