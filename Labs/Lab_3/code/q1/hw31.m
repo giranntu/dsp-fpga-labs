@@ -1,4 +1,4 @@
-% HW1 Question 5
+% HW3 Question 1
 % Jake and Jisoo
 
 close all; clc; clear all;
@@ -14,10 +14,25 @@ plot(x);
 %% FFT
 N = 8000;
 fclose(s); delete(s);
+
+buff_size = 256;
+orig = x(1:buff_size);
+filtered = x(buff_size + 1:end);
+
 figure;
-b = (abs(fft(x, N))/N);
+b = (abs(fft(orig, N))/N);
 range = linspace(-N/2, N/2, N);
-plot(range, fftshift(b));
+plot(range, fftshift(b), 'b');
+xlim([-5000 5000]);
+xlabel('Frequency (KHz)');
+title('FFT');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+hold on;
+b = (abs(fft(filtered, N))/N);
+range = linspace(-N/2, N/2, N);
+plot(range, fftshift(b), 'r');
 xlim([-5000 5000])
 xlabel('Frequency (KHz)')	 
 title('FFT');	 	 
