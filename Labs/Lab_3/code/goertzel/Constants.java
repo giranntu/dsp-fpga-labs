@@ -9,12 +9,16 @@
 public interface Constants {
 	// The sampling rate used for recording and used by the
 	// ultrasound detection algorithm for various calculations.
-	public static final float SAMPLING_RATE = 44100.0F;
+	//public static final float SAMPLING_RATE = 44100.0F;
+	public static final float SAMPLING_RATE = 8000.0F;
 
 	// A default target frequency for the ultrasound detection
 	// algorithm.  The target frequency is the frequency that the
 	// ultrasound detection algorithm looks for in the audio signal.
-	public static final float TARGET_FREQUENCY = 21000.0F;
+	//public static final float TARGET_FREQUENCY = 21000.0F;
+	//public static final float TARGET_FREQUENCY = 2000.0F;
+	//public static final float TARGET_FREQUENCY = 2400.0F;
+	public static final float TARGET_FREQUENCY = 2800.0F;
 
 	// The block size used by the Goertzel algorithm.  This number
 	// represents the amount of samples necessary to make a decision

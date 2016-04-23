@@ -34,7 +34,7 @@ public class Goertzel implements Constants {
      * 
      */
     public Goertzel(){
-		this(SAMPLING_RATE, TARGET_FREQUENCY, N, false);
+	this(SAMPLING_RATE, TARGET_FREQUENCY, N, false);
     }
 	
     /**
@@ -46,24 +46,24 @@ public class Goertzel implements Constants {
      */
     public Goertzel(float sampleRate, float targetFreq, int inN,
 		    boolean inDebug){
-		sampling_rate = sampleRate;
-		target_frequency = targetFreq;
-		n = inN;
-		debug = inDebug;
-		testData = new double[n];
+	sampling_rate = sampleRate;
+        target_frequency = targetFreq;
+	n = inN;
+	debug = inDebug;
+	testData = new double[n];
 
-		// In case initGoertzel is not called, initialize the Goertzel
-		// parameters with default precomputed values.
-		// Below = 21000 Hz
-		sine = 0.14904226617617444692935471527722;     // = sin(2*pi*200/420)
-		cosine = -0.98883082622512854506974288293401;  // = cos(2*pi*200/420)
-			// Below = 19005 Hz
-		//sine = 0.42035722830956549189972281978021;   // = sin(2*pi*181/420)
-		//cosine = -0.90735869456786483795065221200264;// = cos(2*pi*181/420)
-		// Below = 22995 Hz
-		//sine = -0.13423326581765547603701864151067;  // = sin(2*pi*219/420)
-		//cosine = -0.99094976176793475524868671316836;// = cos(2*pi*219/420)
-		coeff = 2 * cosine;
+	// In case initGoertzel is not called, initialize the Goertzel
+	// parameters with default precomputed values.
+	// Below = 21000 Hz
+	sine = 0.14904226617617444692935471527722;     // = sin(2*pi*200/420)
+	cosine = -0.98883082622512854506974288293401;  // = cos(2*pi*200/420)
+    	// Below = 19005 Hz
+	//sine = 0.42035722830956549189972281978021;   // = sin(2*pi*181/420)
+	//cosine = -0.90735869456786483795065221200264;// = cos(2*pi*181/420)
+	// Below = 22995 Hz
+	//sine = -0.13423326581765547603701864151067;  // = sin(2*pi*219/420)
+	//cosine = -0.99094976176793475524868671316836;// = cos(2*pi*219/420)
+	coeff = 2 * cosine;
     }
 
     /**
@@ -203,6 +203,7 @@ public class Goertzel implements Constants {
 	double  real;
 	double	imag;
 
+  System.out.println("--------------------------------");
 	System.out.println("For test frequency " +  frequency);
 	generate(frequency);
 
@@ -221,6 +222,7 @@ public class Goertzel implements Constants {
 	
 	magnitudeSquared = real*real + imag*imag;
 	System.out.println("Relative magnitude squared = " + magnitudeSquared);
+  System.out.println("Relative magnitude squared >> 15 = " + ((int)magnitudeSquared >> 15));
 	magnitude = Math.sqrt(magnitudeSquared);
 	System.out.println("Relative magnitude = " + magnitude);
 
@@ -280,9 +282,9 @@ public class Goertzel implements Constants {
 	   test.debug = true;
 	test.initGoertzel();
 
-	//Demo 1
-        test.generateAndTest(250);
-	test.generateAndTest(test.target_frequency);
-
+      //Demo 1
+      for (int i = 0; i < 10; i++) {
+        test.generateAndTest(Constants.TARGET_FREQUENCY - 200 + i * 50);
+      }
     }
 }
