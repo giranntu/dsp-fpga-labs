@@ -169,8 +169,9 @@ int main(void) {
 	 int i;
 	 while(1){
 		 if(uartStartSendFlag){
-			for (i = 1; i < UART_BUFFER_SIZE; i++){
+			for (i = 0; i < UART_BUFFER_SIZE; i++){
 				uart_sendInt16(UARTData[i]);
+				printf("%d:%d ", UARTData[i], i);
 			}
 			uartStartSendFlag = 0;
 		 }

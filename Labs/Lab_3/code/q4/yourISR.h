@@ -45,9 +45,13 @@ static int Goertzel_Value = 0;
  *    k3 = 72
  * */
 // with unrounded k values
+//short coef_1 = 0xfb;         // For detecting 2000 Hz
+//short coef_2 = -1*0x278D; // For detecting 2400 Hz
+//short coef_3 = -1*0x4C07; // For detecting 2800 Hz
 short coef_1 = 0x0;         // For detecting 2000 Hz
-short coef_2 = ~0x278E + 1; // For detecting 2400 Hz
-short coef_3 = ~0x4B3D + 1; // For detecting 2800 Hz
+short coef_2 = -1*0x278E; // For detecting 2400 Hz
+short coef_3 = -1*0x4B3D; // For detecting 2800 Hz
+
 
 // with rounded k values
 /*
@@ -61,6 +65,9 @@ int prod1 = 0;
 int prod2 = 0;
 int prod3 = 0;
 int input = 0;
+int max_gortz = 0;
+int k = 0;
+float norm_gortz = 0;
 
 void Goertzel(int R_in) {
 	input = (short) R_in;
@@ -70,7 +77,7 @@ void Goertzel(int R_in) {
 	mDelay_2 = mDelay_1;
 	mDelay_1 = mDelay;
 	N++;
-	if (N == 205) {
+	if (N == 200) {
 		prod1 = (mDelay_1 * mDelay_1);
 		prod2 = (mDelay_2 * mDelay_2);
 		prod3 = (mDelay_1 * coef) >> 14;
@@ -80,9 +87,23 @@ void Goertzel(int R_in) {
 		N = 0;
 		mDelay_1 = 0;
 		mDelay_2 = 0;
-		printf("Goertzel_Value = %d\n", Goertzel_Value);
+		norm_gortz = (float)100*Goertzel_Value/max_gortz;
+		if (Goertzel_Value > max_gortz) {
+			max_gortz = Goertzel_Value;
+			printf("New max = %d\n", max_gortz);
+		}
+		if (norm_gortz > 1) {
+			printf("yes\t");
+			UARTData[k] = 1;
+			k = (k + 1) % 256;
+		} else {
+			printf("no\t");
+			UARTData[k] = 0;
+			k = (k + 1) % 256;
+		}
+		printf("current = %d\t max = %d\t norm = %.1f\n", Goertzel_Value, max_gortz, norm_gortz);
 	}
-	IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, Goertzel_Value);
+	//IOWR_ALTERA_AVALON_PIO_DATA(LEFTSENDDATA_BASE, Goertzel_Value);
 }
 
 // --------------------------------------------
@@ -160,6 +181,7 @@ static void handle_switch0_interrupt(void* context, alt_u32 id) {
 	 if (IORD_ALTERA_AVALON_PIO_DATA(SWITCH0_BASE)) {
 		 coef = coef_1;
 		 switch0Flag = 1;
+		 max_gortz = 0;
 	 }
 }
 
@@ -174,6 +196,7 @@ static void handle_switch1_interrupt(void* context, alt_u32 id) {
 	 if (IORD_ALTERA_AVALON_PIO_DATA(SWITCH1_BASE)) {
 		 coef = coef_2;
 		 switch1Flag = 1;
+		 max_gortz = 0;
 	 }
 }
 
@@ -188,6 +211,7 @@ static void handle_switch2_interrupt(void* context, alt_u32 id) {
 	 if (IORD_ALTERA_AVALON_PIO_DATA(SWITCH2_BASE)) {
 		 coef = coef_3;
 		 switch2Flag = 1;
+		 max_gortz = 0;
 	 }
 }
 
@@ -270,7 +294,7 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 	 leftChannel = IORD_ALTERA_AVALON_PIO_DATA(LEFTDATA_BASE);
 
 	 Goertzel(leftChannel);
-	 UARTData[leftCount] = Goertzel_Value;
+//	 UARTData[leftCount] = Goertzel_Value;
 	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 }
 
