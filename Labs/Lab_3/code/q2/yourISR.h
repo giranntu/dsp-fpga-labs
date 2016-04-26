@@ -237,7 +237,6 @@ static void handle_leftready_interrupt_test(void* context, alt_u32 id) {
 		 printf("Before\t%d\tAfter\t%d\n", leftChannel, result);
 	 }
 
-	 UARTData[leftCount] = leftChannel;
 	 UARTData[leftCount + UART_BUFFER_SIZE] = result;
 	 leftCount = (leftCount + 1) % UART_BUFFER_SIZE;
 	 convIndex = (convIndex + 1) % UART_BUFFER_SIZE;
@@ -259,7 +258,7 @@ static void handle_rightready_interrupt_test(void* context, alt_u32 id) {
 	 IOWR_ALTERA_AVALON_PIO_DATA(RIGHTSENDDATA_BASE, rightChannel);
 
 	 // insert input data to be sent to Matlab
-	 UARTData[rightCount + UART_BUFFER_SIZE] = rightChannel;
+	 UARTData[rightCount] = rightChannel;
 	 rightCount = (rightCount+1) % UART_BUFFER_SIZE;
 	 /****************************************/
 }
