@@ -17,6 +17,8 @@
 /*The header file where you store your ISR*/
 #include "fft.h"
 #include "yourISR.h"
+#include <stdlib.h>
+#include <time.h>
 
 /************************************************************************/
 /********************Global Variables for your system********************/
@@ -160,6 +162,10 @@ int main(void) {
 	 //sampleFrequency = 0x0001; //48k
 	 aic23_demo[8] = sampleFrequency;
 	 AIC23_demo();
+
+	 time_t t;
+	 srand((unsigned) time(&t));
+
 	 /*Your main infinity while loop*/
 	 while(1);
 	 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
