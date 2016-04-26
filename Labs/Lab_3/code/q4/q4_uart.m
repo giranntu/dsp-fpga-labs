@@ -1,5 +1,4 @@
 close all; clc; clear all;
-set(0,'DefaultFigureWindowStyle','docked')
 % delete(instrfindall);
 s = serial('COM7', 'BaudRate',115200); % Open the serial port to receive the data
 set(s,'InputBufferSize',20000); % set the size of input buffer
