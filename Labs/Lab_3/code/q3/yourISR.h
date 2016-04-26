@@ -41,11 +41,12 @@ float A = 0; // reset every 1 second
 
 float y_n = 0;
 int Fs = 32000;
+float r = 0;
 
 void chooseRandom() {
-	int r = rand() % 2;
-	printf("r = %d\n", r);
-	if (r > 0) {
+	r = (rand() % 100) / 100.0;
+	printf("r = %.2f\n", r);
+	if (r < 0.5) {
 		printf("playing 1.2 kHz sinusoid\n");
 		current_y_2 = y_2_1200;
 		current_y_1 = y_1_1200;
