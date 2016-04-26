@@ -4,12 +4,11 @@
 close all; clc; clear all;
 
 %% Read UART
-s = serial('COM5', 'BaudRate',115200); % Open the serial port to receive the data
+s = serial('COM7', 'BaudRate',115200); % Open the serial port to receive the data
 set(s,'InputBufferSize',20000); % set the size of input buffer
 fopen(s); % get ready to receive the data
 buffersize = 512; % set the size of instant read of buffer
 x = fread(s,buffersize,'int16'); % read the buffer when data arrive
-plot(x);
 
 %% FFT
 N = 8000;
@@ -19,7 +18,7 @@ buff_size = 256;
 orig = x(1:buff_size);
 filtered = x(buff_size + 1:end);
 
-figure;
+p = figure;
 b = (abs(fft(orig, N))/N);
 range = linspace(-N/2, N/2, N);
 plot(range, fftshift(b), 'b');
@@ -28,6 +27,8 @@ xlabel('Frequency (KHz)');
 title('FFT');
 xlabel('Frequency (Hz)');
 ylabel('Magnitude');
+
+
 
 hold on;
 b = (abs(fft(filtered, N))/N);
@@ -38,3 +39,7 @@ xlabel('Frequency (KHz)')
 title('FFT');	 	 
 xlabel('Frequency (Hz)')	 	 
 ylabel('Magnitude');
+
+name = 'q1_filter_2000';
+saveas(p,name,'fig')
+saveas(p,name,'jpg')
